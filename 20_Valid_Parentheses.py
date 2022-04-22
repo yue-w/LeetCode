@@ -37,6 +37,8 @@ def isValid(s):
     return True
 """
 
+#### Use stack
+
 right = {')':'(',
          '}':'{',
          ']':'['
