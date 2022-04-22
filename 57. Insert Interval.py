@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 29 18:34:30 2020
-
-@author: wyue
-"""
-
 class Solution:
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         rst = []
@@ -20,4 +13,3 @@ class Solution:
 
         rst.append(newInterval)
         return rst
-
