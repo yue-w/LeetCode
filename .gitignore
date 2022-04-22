@@ -1,8 +1,9 @@
 # Byte-compiled / optimized / DLL files
 *.xlsx
 *.csv
-# *.docx
-# *.vsdx
+*.docx
+*.vsdx
+*.gsheet
 __pycache__/
 *.py[cod]
 *$py.class
