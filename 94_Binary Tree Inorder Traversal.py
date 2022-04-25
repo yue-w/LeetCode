@@ -50,6 +50,7 @@ if __name__ == '__main__':
     root.right = TreeNode('c')
     root.right.left = TreeNode('f')
     root.right.right = TreeNode('g')
+    
     s = Solution()
     rst = s.inorderTraversal(root)
     print(rst) 
