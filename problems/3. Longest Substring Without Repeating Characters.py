@@ -10,7 +10,7 @@ class Solution:
         if not s:
             return 0
         maxv = 0
-        ## The table stores the last appearance in the table. -1 if not appeared.
+        ## The table stores the last appearance in the table. -1 if not appeared. Remember this trick.
         ## There are 128 characters (ASCII).
         table = [-1] * 128
         left = 0
@@ -20,31 +20,26 @@ class Solution:
             maxv = max(maxv, right - left + 1)
 
         return maxv
+    
     def hash(self, s: str) -> int:
         """
         running: O(n)
         time: constant.
+        Use set as hash.
         """
-        if not s:
-            return 0
-        seen = {}
-        seen[s[0]] = 0
-        maxv = 1
+        seen = set()
+        maxv = 0
         left = 0
-        for right in range(1, len(s)):
-            if s[right] not in seen:
-                seen[s[right]] = right
-                maxv = max(maxv, len(seen))
-            else:
-                maxv = max(maxv, len(seen))
-                # shift the left pointer and update dictionary    
-                new_left = seen[s[right]]
-                while left <= new_left:
-                    del seen[s[left]]
-                    left += 1
-                seen[s[right]] = right   
-            
+
+        for right in range(left, len(s)):
+            while s[right] in seen:
+                seen.remove(s[left])
+                left += 1
+            seen.add(s[right])
+            maxv = max(maxv, right - left + 1)
+
         return maxv
+
 
 
 

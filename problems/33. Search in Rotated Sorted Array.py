@@ -5,6 +5,7 @@ Created on Sun Apr 17 17:29:30 2022
 @author: wyue
 """
 from typing import List
+
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         pivot = self.find_pivot(nums)
@@ -20,8 +21,10 @@ class Solution:
         ## Base case
         left = 0
         right = len(nums)
+        ## if there is only one element
         if len(nums) == 1:
             return 0
+        ## if there is no pivot point
         if nums[left] < nums[right - 1]:
             return right - 1
         while left < right:
@@ -59,3 +62,4 @@ if __name__ == '__main__':
     target = 1
     rst = s.search(nums, target)
     print(rst)
+    
