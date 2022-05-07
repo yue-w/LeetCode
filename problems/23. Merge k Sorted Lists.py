@@ -14,30 +14,34 @@ class ListNode(object):
 class Solution(object):
     def mergeKLists(self, lists):
         """
-        :type lists: List[ListNode]
-        :rtype: ListNode
+        Method 1: Use heap
+        Time: O(nklogk)
+        Space: O(k)
         """
         ListNode.__lt__ = lambda x, y: True if x.val < y.val else False # key statement
-        
-        if not lists:
-            return []
-        
-        dummy = ListNode(None)
-        curr = dummy
-        heap = [(node.val, node) for node in lists if node]
-        
-        heapq.heapify(heap)
-        while heap:
-            val, node = heapq.heappop(heap)
-            curr.next = node
-            curr = curr.next
-            if node.next:
-                heapq.heappush(heap, (node.next.val, node.next))
-            
-        return dummy.next
-        
 
+        rst = ListNode()
+        head = rst
+        heap = [node for node in lists if node]
+        heapq.heapify(heap)
         
+        while heap:
+            node = heapq.heappop(heap)
+            head.next = node
+            if node.next:
+                heapq.heappush(heap, node.next)
+            head = head.next
+            
+        
+        return rst.next
+
+        """
+        Method 2: divde and conquer
+        Time: O(nklogk)
+        Space: O(logk) if recursion or O(1) if iteration.
+        """
+        ## Todo
+
 
 
 lists = []
@@ -56,3 +60,7 @@ l = ListNode(2)
 l.next = ListNode(6)
 lists.append(l)
 l = Solution().mergeKLists(lists)
+#l = Solution().mergeKLists([])
+while l:
+    print(l.val)
+    l = l.next

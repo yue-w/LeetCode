@@ -4,6 +4,8 @@
 *.docx
 *.vsdx
 *.gsheet
+*.pdf
+*.ipynb
 __pycache__/
 *.py[cod]
 *$py.class

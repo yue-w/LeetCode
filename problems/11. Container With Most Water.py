@@ -8,7 +8,7 @@ class Solution:
     def brute_force(self, height):
         """
         sliding window/ two pointers
-        Bruteforce O(n^2)
+        Bruteforce, time: O(n^2), space O(1)
         """
         maxA = 0
         for left in range(0, len(height) - 1):
@@ -18,6 +18,9 @@ class Solution:
         return maxA
     
     def two_pointers(self, height):
+        """
+        time: O(n), time: O(1)
+        """
         left = 0
         right = len(height) - 1
         max_a = 0

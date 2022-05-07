@@ -5,11 +5,11 @@ Created on Fri Oct 16 21:07:14 2020
 @author: wyue
 """
 
-# Definition for singly-linked list.
-# class ListNode(object):
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
+##Definition for singly-linked list.
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 class Solution(object):
     def removeNthFromEnd(self, head, n):
         """
@@ -17,21 +17,19 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
-        if head.next is None:
-            return None
+        dummy = ListNode(-1)
+        dummy.next = head
+        slow = dummy
+        fast = head
+        while n > 0 and fast:
+            fast = fast.next
+            n -= 1
+        while fast:
+            fast = fast.next
+            slow = slow.next
         
-        ## To do check n == 2
+        slow.next = slow.next.next
         
-        runner = head
-        current = head
-        for i in range(n):
-            if not runner.next:
-                return current.next
-            runner = runner.next
-        while runner.next:
-            runner = runner.next
-            current = current.next
-        current.next = current.next.next
-        return head
+        return dummy.next
         
     

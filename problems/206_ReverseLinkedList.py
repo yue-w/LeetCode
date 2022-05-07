@@ -13,7 +13,9 @@ class ListNode(object):
 
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        return self.reverseList_iteration(head)
+        #return self.reverseList_iteration(head)
+        return self.reverseList_recursion(head)
+
     def reverseList_iteration(self, head):
         if not head:
             return head
@@ -29,14 +31,21 @@ class Solution:
     
     ## Solution 2. Recursion. Runtime: O(n), space O(n)
     def reverseList_recursion(self, head):
-        pass
-    
+        ## Base case:
+        if not head or not head.next:
+            return head
+  
+        reversed_list_head = self.reverseList_recursion(head.next)
+        head.next.next = head
+        head.next = None
+        return reversed_list_head
 
 
-
-lst = ListNode(0)
-lst.next = ListNode(1)
-lst.next.next = ListNode(2)
-lst.next.next.next = ListNode(3)
-
-head = reverseList_recursion(lst)
+if __name__ ==  '__main__':
+    lst = ListNode(0)
+    lst.next = ListNode(1)
+    lst.next.next = ListNode(2)
+    lst.next.next.next = ListNode(3)
+    s = Solution()
+    head = s.reverseList(lst)
+    print(head.val)
