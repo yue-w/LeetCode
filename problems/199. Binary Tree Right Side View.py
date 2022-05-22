@@ -1,97 +1,49 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Nov 25 17:48:44 2020
+from typing import Optional, List
 
-@author: wyue
-"""
-# Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+## Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
-import collections
-class Solution(object):
-    def __init__(self):
-        self.rst = []
-    def rightSideView(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
-#         ## Method 1: BFS two queues. Best
-#         ## Time: O(N)
-#         ## Space: O(D), D: # of points in a level
-#         if not root:
-#             return []
-#         current_level = collections.deque()
-#         current_level.appendleft(root)
-        
-#         while current_level:
-#             tem = []
-#             next_level = collections.deque()
-#             while current_level:
-#                 node = current_level.pop()
-#                 tem.append(node.val)
-#                 if node.left:
-#                     next_level.appendleft(node.left)
-#                 if node.right:
-#                     next_level.appendleft(node.right)
-            
-#             self.rst.append(tem[-1])
-#             current_level = next_level     
-#         return self.rst
-          
+from collections import deque
 
-
-#         ## Method 2: BFS one queue
-#         ## Time: O(N)
-#         ## Space: O(D), D: # of points in a level
-#         if not root:
-#             return []
-#         queue = collections.deque()
-#         queue.appendleft(root)
-#         queue.appendleft(None)
-        
-#         current = root
-
-#         while queue:
-#             prev = current
-#             current = queue.pop()
-            
-#             while current:
-#                 if current.left:
-#                     queue.appendleft(current.left)
-#                 if current.right:
-#                     queue.appendleft(current.right)
-                    
-#                 prev, current = current, queue.pop()
-#             ## When current is None, it means prev is the last element, add it to result
-#             self.rst.append(prev.val)
-            
-#             if queue:
-#                 queue.appendleft(None)
-        
-#         return self.rst
-            
-
-#         ## Method 3: DFS one queue
-#         ## Time: O(N)
-#         ## Space: O(D), D: # of points in a level
-        
-        if not root:
-            return []
-        self.helper(root, 0)
-        return self.rst
-        
-    def helper(self, node, level):
-        if level == len(self.rst):
-            self.rst.append(node.val)
-        
-        if node.right:
-            self.helper(node.right, level+1)
-        if node.left:
-            self.helper(node.left, level+1)
-        
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        #return self.bfs(root)
+        return self.recursion(root)
     
+    def bfs(self, root):
+        rst = []
+        dq = deque() ## Keep entering from right and leaving from left.
+        if root:
+            dq.append(root)
+            while dq:
+                len_curr = len(dq)
+                for i in range(len_curr):
+                    node = dq.popleft()
+                    ## if node is the last one in this level, add it to rst
+                    if i == len_curr - 1:
+                        rst.append(node.val)
+                    ## next level
+                    if node.left:
+                        dq.append(node.left)
+                    if node.right:
+                        dq.append(node.right)
+        return rst
+
+    def recursion(self, root):
+        rst = []
+        self._recursion(root, rst, 0)
+        return rst
+    
+    def _recursion(self, root, rst, level):
+        ## Base case
+        if not root:
+            return
+        if level == len(rst):
+            rst.append(root.val)
+        self._recursion(root.right, rst, level + 1)
+        self._recursion(root.left, rst, level + 1)
+        

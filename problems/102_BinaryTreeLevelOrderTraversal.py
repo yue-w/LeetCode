@@ -14,15 +14,7 @@ class TreeNode(object):
          self.val = val
          self.left = left
          self.right = right
-         
-def dfs(root, result, level):
-    if root != None:
-        if len(result)<level:
-            result.append([])
-        result[level-1].append(root.val)
-        dfs(root.left, result, level+1)
-        dfs(root.right, result, level+1)
-    
+          
     
 class Solution(object):
     def levelOrder(self, root):
@@ -33,47 +25,12 @@ class Solution(object):
         result = []
         if root == None:
             return result
-        # dfs(root, result, 1)
-        # return result
+        self.dfs(root, result, 1)
+        return result
 
-        return self.bfs_queue2(root)
-
-    def bfs_queue1(self, root): 
+    def bfs_queue1(self, root):
         """
-        BFS method 1.
-        """   
-        rst = []
-        if not root:
-            return rst
-        queue = Queue()
-        queue.put(root)
-        nodes_next_level = Queue()
-        nodes_current_level = []
-
-        while not queue.empty() or not nodes_next_level.empty():
-            ## if queue is not empty, add its value to nodes_current_level 
-            if not queue.empty():
-                while not queue.empty():
-                    node = queue.get()
-                    nodes_current_level.append(node.val)
-                    if node.left:
-                        nodes_next_level.put(node.left)
-                    if node.right:
-                        nodes_next_level.put(node.right)
-                if nodes_current_level:
-                    rst.append(nodes_current_level)
-            ## if queue is empty, the current level is done, add nodes in current level (saved in nodes_current_level) to rst
-            ## Add nodes of next level (saved in nodex_next_level) into queue, then clean nodex_next_level
-            else:
-
-                queue, nodes_next_level = nodes_next_level, queue
-                nodes_current_level = []
- 
-        return rst
-
-    def bfs_queue2(self, root):
-        """
-        BFS method 2
+        BFS method 1. Preferred, use template. 
         """ 
         if not root:
             return []
@@ -96,6 +53,51 @@ class Solution(object):
             rst.append(current_level)
 
         return rst
+        
+    def dfs(self, root, result, level):
+        if root != None:
+            if len(result)<level:
+                result.append([])
+            result[level-1].append(root.val)
+            self.dfs(root.left, result, level+1)
+            self.dfs(root.right, result, level+1)
+
+        return self.bfs_queue2(root)
+
+    def bfs_queue2(self, root): 
+        """
+        BFS method 2.
+        """   
+        rst = []
+        if not root:
+            return rst
+        queue = Queue()
+        queue.put(root)
+        nodes_next_level = Queue()
+        nodes_current_level = []
+
+        while not queue.empty() or not nodes_next_level.empty():
+            ## if queue is not empty, add its value to nodes_current_level 
+            if not queue.empty():
+                while not queue.empty():
+                    node = queue.get()
+                    nodes_current_level.append(node.val)
+                    if node.left:
+                        nodes_next_level.put(node.left)
+                    if node.right:
+                        nodes_next_level.put(node.right)
+                if nodes_current_level:
+                    rst.append(nodes_current_level)
+            ## if queue is empty, the current level is done, add nodes in current level (saved in nodes_current_level) to rst
+            ## Add nodes of next level (saved in nodex_next_level) into queue, then clean nodes_current_level
+            else:
+
+                queue, nodes_next_level = nodes_next_level, queue
+                nodes_current_level = []
+ 
+        return rst
+
+
 
 
 

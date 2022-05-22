@@ -11,40 +11,38 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if nums == []: return 0
-        if len(nums) == 1: return nums[0]
-        if len(nums) == 2: return max(nums)
-        scores = [-1] * len(nums)
-        scores[-1] = nums[-1]
-        self.helper(nums, scores, 0)
-        return scores[0]
-
-    def helper(self,nums, scores, index):    
-        ## Base case of recursion
-        if len(nums)==0: 
+        # memo = {}
+        # return self.recursion(nums, 0, len(nums) - 1, memo)
+        return self.DP_botton_up(nums)
+    
+    def recursion(self, nums, i, n, memo):
+        ## Base case
+        if i == n:
+            return nums[i]
+        if i > n:
             return 0
-        if len(nums)==1:
-            return scores[-1] 
-        if len(nums) ==2:
-            """
-            value = nums[-2]
-            scores[-2] = value
-            """
-            return max(nums)
-            
-        first = nums[0]
-        if scores[index+2] != -1:
-            sol1 = first + scores[index+2] 
-        else:
-            sol1 = first + self.helper(nums[2:], scores, index+2)
-        if scores[index+1] != -1:
-            sol2 = scores[index+1]
-        else:
-            sol2 = self.helper(nums[1:],scores, index+1)
-        value = max(sol1, sol2)
-        ## momization
-        scores[index] = value
-        return value
+        ## if in memo
+        if i in memo:
+            return memo[i]
+        maxv = max(nums[i] + self.recursion(nums, i + 2, n, memo), self.recursion(nums, i + 1, n, memo))
+        memo[i] = maxv
+        return maxv
 
-nums = [2,1,1,2]
+
+    def DP_botton_up(self, nums):
+        if nums == []: 
+            return 0
+        if len(nums) == 1: 
+            return nums[0]
+        if len(nums) == 2: 
+            return max(nums)
+        prepre = nums[0]
+        pre = max(nums[0], nums[1])
+        for i in range(2, len(nums)):
+            cur = max(prepre + nums[i], pre) 
+            prepre = pre
+            pre = cur  
+        return pre
+
+nums = [2, 1, 1, 2]
 print(Solution().rob(nums))
