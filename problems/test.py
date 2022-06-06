@@ -1,45 +1,39 @@
 
 
 # %%
-n = -12345
-ans = 0
-while n:
-    ans = ans * 10 + n % 10
-    n //= 10
-print(ans)
+import heapq
+hq = [(2, 3),(1, 2)]
+a, b = heapq.heappop(hq)
+print(a)
+print(b)
 # %%
-a = [1,2]
-c, d = a
+left = float('-inf') 
+right = float('inf') 
+print(left + (right - left) // 2)
 # %%
+[1] + [] + [3]
+# %%
+a = [1,2,3]
+a[:0] + [0] + a[0:]
+# %%
+a = [1,2,3]
+a.sort()
+print(a)
+# %%
+def factorial(n):
+    if n == 0:
+        return 1
+    rst = 1
+    while n > 0:
+        rst *= n
+        n -= 1
+    return rst
+print(factorial(10))
+# %%
+a = [1,2,3,4]
 a.pop()
 # %%
-a
+int('+4')
 # %%
-a.sort(reverse=True)
-# %%
-a = 'a' + 'b'
-# %%
-a = a - 'b'
-# %%
-a = str('a')
-# %%
-a = 10
-b = 1
-if 0 < a < 11 and 0 < b < -2:
-    print('True')
-else:
-    print('False')
-
-
-# %%
-
-6//2
-# %%
-(1,2) == (1,2)
-# %%
-a = [(1,2)]
-a[0] == (1,2)
-# %%
-s = 'abcde'
-len(s[-1: 0])
+print(2**31)
 # %%

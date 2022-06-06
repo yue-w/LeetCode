@@ -1,6 +1,6 @@
 
 def quick_sort(A, left=0, right=None):
-	if not right:
+	if right is None:
 		right = len(A) - 1
 	## Base case
 	if left >= right:
@@ -26,10 +26,10 @@ def find_pivot(left, right):
 	return left + (right - left) // 2
 
 def partition(A, left, right):
-	p = A[left]
+	pivot = A[left]
 	i = left + 1
 	for j in range(left + 1, right + 1):
-		if A[j] < p:
+		if A[j] < pivot:
 			A[i], A[j] = A[j], A[i]
 			i += 1
 	## swap A[left] and A[i - 1]
@@ -37,6 +37,6 @@ def partition(A, left, right):
 	return i - 1
 	
 if __name__ == '__main__':
-	A = [3, 1, 2, 4]
+	A = [3, 2, 1]
 	quick_sort(A)
 	print(A)

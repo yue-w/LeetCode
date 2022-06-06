@@ -17,8 +17,8 @@ class Solution:
                 l -= 1
                 r += 1
 
-            ## when reached this point, l and r are no longer the boundary,
-            ## and the real boundary is l + 1 and r - 1, the length is r - l + 1 - 2
+            ## when reaching this point, l and r exits the boundary
+            ## the real boundary is l + 1 and r - 1, the length is r - l + 1 - 2
             if maxlen < r - l - 1:
                 maxlen = r - l - 1
                 left = l + 1

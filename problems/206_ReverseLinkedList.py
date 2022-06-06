@@ -21,12 +21,12 @@ class Solution:
             return head
         cur = head
         prev = None
-        tail = None
+        nxt = None
         while cur:
-            tail = cur.next
+            nxt = cur.next
             cur.next = prev 
             prev = cur
-            cur = tail
+            cur = nxt
         return prev
     
     ## Solution 2. Recursion. Runtime: O(n), space O(n)
