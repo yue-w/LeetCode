@@ -29,6 +29,7 @@ class Solution:
         stack = []
         i = 0
         while i < len(string):
+            ## if + or -, add the number into the stack
             if string[i] == '+' or string[i] == '-':
                 operator = string[i]
                 j = i + 1
@@ -41,16 +42,13 @@ class Solution:
                     num = int(string[i+1:j])
                 stack.append(int(num))
                 i = j 
-            else: # * or /
+            # if * or /, operate it with the last element in the stack.
+            else: 
                 operator = string[i]
                 j = i + 1
                 while j < len(string) and string[j].isdigit():
                     j += 1
                 num = int(string[i + 1 : j])
-                # if operator == '-':
-                #     num = -int(string[i+1:j])  
-                # else:
-                #     num = int(string[i+1:j])
                 if operator == '*':
                     stack[-1] *= num
                 else:
@@ -145,6 +143,6 @@ class Solution:
 
 if __name__ == '__main__':
     s = Solution()
-    string = "0-2147483647"
+    string = "1 + 3 / 2 * 5"
     rst = s.calculate(string)
     print(rst)

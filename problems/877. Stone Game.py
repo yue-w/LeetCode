@@ -17,9 +17,9 @@ class Solution:
         
         left = piles[i] + sum(piles[i+1: j + 1]) - self.recursion(piles, i+1, j, table)
         right = piles[j] + sum(piles[i:j]) - self.recursion(piles, i, j-1, table)
-        rst = max(left, right)
-        table[i][j] = rst
-        return rst
+        score = max(left, right)
+        table[i][j] = score
+        return score
         
 
 if __name__ == '__main__':

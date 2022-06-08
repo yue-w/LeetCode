@@ -9,6 +9,16 @@ class Solution:
     def method1(self, nums):
         """
         remove duplicate from nums
+        idea: consider this as a tree. The left path being selecting this node,
+        and the right path being not selecting this node. All paths starting from 
+        the right path and below the right path should not selecting node with the 
+        same value (because the left path tare of selecting of not selecting this 
+        value already). ref: https://www.youtube.com/watch?v=Vn2v6ajA7U0&t=417s
+        Another way to think about this is:
+        for n components with the same value, if we want to select k of them, we 
+        will only select the first k of them. So if the previouse one with the 
+        same value was not selected, the current one should not be selected. 
+        ref: https://github.com/wisdompeak/LeetCode/tree/master/DFS/090.Subsets-II
         """
         self.rst = []
         curr = []

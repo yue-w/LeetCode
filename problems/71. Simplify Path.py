@@ -5,68 +5,92 @@ Created on Fri Nov 20 10:08:08 2020
 @author: wyue
 """
 
+from re import L
+
+
 class Solution(object):
     def simplifyPath(self, path):
         """
         :type path: str
         :rtype: str
         """
-        # if not path:
-        #     return path
-        # rst = []
-        # dot = 0
-        # for ele in path:
-        #     if ele=='.':
-        #         ## signle dot
-        #         if dot == 0:
-        #             dot = 1
-        #             while len(rst) and rst[-1] =='/':
-        #                 rst.pop()
-        #         ## double dot                            
-        #         else:
-        #             dot = 1
-        #             while len(rst):
-        #                 if rst[-1] !='/':
-        #                     rst.pop()
-        #                 else:
-        #                     rst.pop()
-        #                     break
-        #     elif len(rst)>0 and ele == '/':
-        #         dot = 0
-        #         if rst[-1] == '/':
-        #             continue
-        #         else:
-        #             rst.append(ele)
-        #     else:
-        #         dot = 0
-        #         rst.append(ele)
-                
-        # if rst == []:
-        #     return '/'
-        # elif len(rst)>1 and rst[-1] == '/':
-        #     rst.pop()
-        # return ''.join(rst)
-        rst = []
-        path = path.split('/')
-        for ele in path:
-            ele = ele.strip()
-            if ele=='..':
-                if len(rst)>0:
-                    rst.pop()
-            elif ele=='.':
-                continue
-            elif ele=='':
-                continue
+        return self.method1(path)
+    def method1(self, path):
+        stack = []
+        curr = ''
+        path = path + '/'
+
+        for e in path:
+            if e == '/':
+                if curr == '..':
+                    if stack:
+                        stack.pop()
+                elif curr and curr != '.':
+                    stack.append(curr)
+                curr = ''
             else:
-                rst.append(ele)
+                curr += e
+
+        return '/' + '/'.join(stack)
         
-        output = ['/']
-        for ele in rst:
-            output.append(ele)
-            output.append('/')
-        if len(output)>1 and output[-1]=='/':
-            output.pop()
-        return ''.join(output)
-    
-path = "/../"
-print(Solution().simplifyPath(path))
+    def method2(self, path):
+        stack = []
+        stack.append('/')
+        n = len(path)
+        i = 0
+        while i < n:
+            if path[i] == '/':
+                if stack[-1] == '/':
+                    i += 1
+                    continue
+                else:
+                    stack.append('/')
+                    i += 1
+                    
+            elif path[i] == '.':
+                # ## if this dot is not followed by '.' or /, it is part of a folder/file name
+                # if i + 1 < n and path[i + 1] not in ['/', '.']:
+                #     stack.append('.')
+                #     i += 1
+                #     continue
+                ## this dot is not part of a folder/ file name
+                j = i
+                while i < n and path[i] == '.':
+                    i += 1
+                if i < n and (path[i] != '/' or stack[-1] != '/'):
+                    while j < i:
+                        stack.append(path[j])
+                        j += 1
+                ## two dots, go up one level if possible
+                if i - j == 2:
+                    if len(stack) == 1:
+                        continue
+                    else:
+                        stack.pop()
+                    while len(stack) > 1 and stack[-1] != '/':
+                        stack.pop()
+                ## one dot, ignore
+                elif i - j  == 1:
+                    continue
+                ### more than two dots, it is a file/folder name, keep.
+                else:
+                    while j < i:
+                        stack.append(path[j])
+                        j += 1
+                                    
+            else:
+                stack.append(path[i])
+                i += 1
+                
+        if stack[-1] == '/' and len(stack) > 1:
+            stack.pop()
+        
+        return ''.join(stack)
+        
+
+
+
+if __name__ == '__main__':
+    s = Solution()
+    path = "/a//b////c/d//././/.."
+    print(s.simplifyPath(path))

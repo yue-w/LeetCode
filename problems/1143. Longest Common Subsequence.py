@@ -19,4 +19,13 @@ class Solution:
                     dp[i][j] = max(dp[i-1][j], dp[i][j-1])
                     
         return dp[M][N]
-                
+
+"""
+Reference
+https://www.youtube.com/watch?v=CEnb7Ho7TYc&t=545s
+
+dp[i][j]: The longest common subsequence of text1[0][i] and text2[0][j].
+The transition function: 
+    if text1[i] == text2[j], then dp[i][j] = dp[i-1][j-1] + 1
+    else, text1[i][j] = max(dp[i][j-1], dp[i-1][j])
+"""
