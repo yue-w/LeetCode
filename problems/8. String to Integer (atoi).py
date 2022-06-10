@@ -56,8 +56,10 @@ class Solution:
             return UB
         else:
             return rst
+
 """
-Clarification:
+Ask Clarification questions about the edge cases:
+Examples:
 134.1 is read in as 134 ignore "."?
 Leading characters other than white space? e.g. s = '%+'?
 what is invalid number?

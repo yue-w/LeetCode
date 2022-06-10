@@ -4,11 +4,10 @@ class Solution:
         len1 = len(word1)
         len2 = len(word2)
         
-        ## append a token to word1 and word2 to make 1 indexed.
+        ## append a token to word1 and word2 to make 1 indexed, to avoid
+        ##  dealing with dp[-1] and dp[-1] below.
         word1 = '*' + word1
         word2 = '%' + word2
-        
-
         
         dp = [[0 for _ in range(len2 + 1)] for _ in range(len1 + 1)]
         
@@ -23,7 +22,10 @@ class Solution:
         
         
 """
-Clarification:
+In mathematics, a subsequence of a given sequence is a sequence that can be 
+derived from the given sequence by deleting some or no elements without 
+changing the order of the remaining elements. For example, the sequence 
+[A, B, D] is a subsequence of [A, B, C, D, E, F]. 
 same as find the longest common string. Then subtract it from the length of both strings
 return len(word1) + len(word2) - dp[i][j] * 2
 dp[i][j]: The longest common subsequence of word1[0][i] and word2[0][j].

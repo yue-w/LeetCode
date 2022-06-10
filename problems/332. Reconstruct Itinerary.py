@@ -5,7 +5,9 @@ from typing import List
 class Solution:
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
         """
-        DFS, Hash
+        Post order traversal.
+        DFS
+        Reference: https://www.youtube.com/watch?v=4udFSOWQpdg&t=623s
         """
         ans = []
         

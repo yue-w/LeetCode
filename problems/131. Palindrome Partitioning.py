@@ -57,12 +57,12 @@ class Solution:
         
         
 """
-backtracking?
+backtracking, dp.
 dp[i][j]: whether s[i] to s[j] is palindrome.
 dp[i][j] = (dp[i] == dp[j]) and (dp[i + 1][j - 1] is True)
 if dp[i][j] is True, add dp[i][j] into curr and i += 1
 if dp[i][j] is False, add s[i] into curr and i += 1
-if j == len(s) = 1, append all elements in curr into rst.
+if j == len(s), append all elements in curr into rst.
 """
         
 if __name__ == '__main__':
