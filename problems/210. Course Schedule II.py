@@ -49,11 +49,11 @@ class Solution:
             ## if detect cycle, return False
             if not self.dfs(c):
                 return False
-            self.dfs(c)
-            
+        
+        ## If not return false at this stage, 
+        ## There is no cycle starting from this node. 
         ## Change state of course to 2 (visited)
         self.state[course] = 2
-        
         ## Add the course to rst
         self.rst.append(course)
         return True

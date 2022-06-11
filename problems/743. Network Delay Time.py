@@ -1,16 +1,16 @@
 
 import heapq
 from typing import List
-import heapq
 
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        #return self.method1(times, n, k)
         return self.method2(times, n, k)
         #return self.method3(times, n, k)
     
     def method1(self, times, n, k):
         """
-        Dijkstra's algorithm. Do not compute, distance from source to every point,
+        Dijkstra's algorithm. Do not compute distance from source to every point,
         just keep the longest time. 
         Time: O(Elog(E))
         Space: E
@@ -52,7 +52,7 @@ class Solution:
     def method2(self, times, n, k):
         """
         Dijkstra's algorithm. Comput the time from the source to every point. 
-        Out put the largetst one. 
+        Output the largetst one. 
         Time: O(Elog(E))
         Space: E
         """
@@ -69,11 +69,12 @@ class Solution:
         hp = [(0, k)]
         heapq.heapify(hp)
         while hp:
-            weight, tail = heapq.heappop(hp)
+            delay_time, tail = heapq.heappop(hp)
             if visited[tail]:
                 continue
             visited[tail] = 1
-            time_from_source[tail] = weight
+            time_from_source[tail] = delay_time
+            
             for head, weight in adlist[tail]:
                 if time_from_source[tail] + weight < time_from_source[head]:
                     heapq.heappush(hp, (time_from_source[tail] + weight, head))
@@ -99,10 +100,10 @@ class Solution:
         for n1, n2, t in times:
             dp[n1-1][n2-1] = t
             
-        for kk in range(n):
+        for pivot in range(n):
             for i in range(n):
                 for j in range(n):
-                    dp[i][j] = min(dp[i][j], dp[i][kk] + dp[kk][j])
+                    dp[i][j] = min(dp[i][j], dp[i][pivot] + dp[pivot][j])
         
         maxt = max(dp[k-1][:])
         if maxt == float('inf'):

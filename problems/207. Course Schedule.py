@@ -36,11 +36,12 @@ class Solution:
             return True
         self.state[course] = 1
         
+        ## Return False if any of the folloing courses find a cycle
         for c in self.adlist[course]:
-            ## Return False if any of the folloing courses find a cycle
             if not self.dfs(c):
                 return False
 
+        ## Backing track, if no cycle after this node, mark it as visited
         self.state[course] = 2
         return True
         
@@ -59,6 +60,7 @@ class Solution:
             self.adlist[c2].append(c1)
             self.in_degree[c1] += 1
 
+        ## add nodes with 0 degree into the queue (those are course OK to take now)
         q = deque() ## enter from right, leave from left
         for node in range(numCourses):
             if self.in_degree[node] == 0:
