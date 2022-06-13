@@ -6,8 +6,8 @@ class Solution:
     
     def method1(self, arr):
         """
-        dp[i][0]: max subarray ending at i, do not delete number
-        dp[i][1]: max subarray ending at i, delete a number
+        dp[i][0]: max subarray ending at i, do not delete number (continuous subarray)
+        dp[i][1]: max subarray ending at i, delete a number (one number is missing in the subarray possibly arr[i]).
         Transition funciton: 
         dp[i][0] = max(dp[i-1][0] + arr[i], arr[i]) ## two cases similar to Kandan algorithm
         dp[i][1] = max(dp[i-1][0], dp[i-1][1] + arr[i]) ## case 1: delete arr[i], case 2: delete some number other than arr[i]

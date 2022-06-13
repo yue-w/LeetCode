@@ -15,43 +15,35 @@ class TreeNode(object):
         self.right = right
 
 import queue
-
+from typing import Optional
 class Solution(object):
-    
-    ## Recursion
-    # def isSymmetric(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: bool
-    #     """
-    #     if root == None: return True
-    #     return self.helper(root.left, root.right)
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        #return self.helper(root.left, root.right)
+        return self.helper_it(root)
         
-    # def helper(self, left, right):
-    #     if left==None or right==None:
-    #         return left == right
-    #     if left.val != right.val:
-    #         return False
-    #     ## left child's left child equals right child's right child, left child's right child equals right child's left child
-    #     return self.helper(left.left, right.right) and self.helper(left.right, right.left)
-
-    
-    ## Iteration
-    def isSymmetric(self, root):
-        """
-        :type root: TreeNode
-        :rtype: bool
-        """
+        
+    def helper(self, left, right):
+        if left is None:
+            return right is None
+        elif right is None:
+            return False
+        else:
+            if left.val != right.val:
+                return False
+            else:
+                return self.helper(left.right, right.left) and self.helper(left.left, right.right)
+            
+    ## Iteration method    
+    def helper_it(self, root):
         q = queue.Queue()
         q.put(root)
         q.put(root)
-        
         while not q.empty():
             left = q.get()
             right = q.get()
-            if left == None and right == None:
+            if (left is None) and (right is None):
                 continue
-            if left==None or right == None:
+            if (left is None) or (right is None):
                 return False
             if left.val != right.val:
                 return False
@@ -59,7 +51,7 @@ class Solution(object):
             q.put(right.right)
             q.put(left.right)
             q.put(right.left)
-        
+            
         return True
             
 

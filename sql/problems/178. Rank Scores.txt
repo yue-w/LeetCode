@@ -1,0 +1,13 @@
+
+## Method 1
+SELECT 
+    Score, 
+    DENSE_RANK() OVER(ORDER BY score DESC) AS "Rank"
+FROM scores;
+
+## Method 2
+# SELECT 
+#     s1.score,
+#     (SELECT COUNT(DISTINCT SCORE) FROM scores s2 WHERE s2.score >= s1.score) AS "Rank"
+# FROM scores s1
+# ORDER BY s1.score DESC;

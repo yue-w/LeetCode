@@ -4,6 +4,7 @@ Created on Tue Sep 22 22:41:37 2020
 
 @author: wyue
 """
+from typing import Optional
 
 # Definition for a binary tree node.
 class TreeNode(object):
@@ -23,48 +24,44 @@ def helper(root, min_v, max_v):
             and helper(root.right,root.val,max_v)
         
 
-class Solution(object):
-    def isValidBST(self, root):
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
         """
-        :type root: TreeNode
-        :rtype: bool
+        Recursion
         """
-        valid = helper(root,float('-inf'), float('inf'))
-        return valid
-
-        return self.bfs_queue(root)
-    def bfs_queue(self, root):    
-        rst = []
+        #return self.recursion(root, float('-inf'), float('inf'))
+        #return self.iteration(root)
+        
+    def recursion(self, root, minv, maxv):
+        ## Base case:
         if not root:
-            return rst
-        queue = Queue()
-        queue.put(root)
-        nodes_next_level = Queue()
-        nodes_current_level = []
-
-        while not queue.empty() or not nodes_next_level.empty():
-            ## if queue is not empty, add its value to nodes_current_level 
-            if not queue.empty():
-                while not queue.empty():
-                    node = queue.get()
-                    nodes_current_level.append(node.val)
-
-                    if node.left:
-                        nodes_next_level.put(node.left)
-                    if node.right:
-                        nodes_next_level.put(node.right)
-                if nodes_current_level:
-                    rst.append(nodes_current_level)
-            ## if queue is empty, the current level is done, add nodes in current level (saved in nodes_current_level) to rst
-            ## Add nodes of next level (saved in nodex_next_level) into queue, then clean nodex_next_level
-            else:
-                # while not nodes_next_level.empty():
-                #     n = nodes_next_level.get()
-                #     queue.put(n)
-                queue, nodes_next_level = nodes_next_level, queue
-                nodes_current_level = []
- 
-        return rst
+            return True
+        if root.val <= minv or root.val >= maxv:
+            return False
+        return self.recursion(root.left, minv, root.val) and self.recursion(root.right,root.val, maxv)
+        
+    
+    def iteration(self, root):
+        if not root:
+            return True
+        stack = []
+        stack.append((root, float('-inf'), float('inf')))
+        
+        while stack:
+            curr = stack.pop()
+            
+            if not curr[0]:
+                continue
+                
+            if curr[0].val <= curr[1] or curr[0].val >= curr[2]:
+                return False
+            
+            if curr[0].left:
+                stack.append((curr[0].left, curr[1], curr[0].val))
+            if curr[0].right:
+                stack.append((curr[0].right, curr[0].val, curr[2]))
+        
+        return True
 s = Solution()
 t = TreeNode(2)
 t.left = TreeNode(1)

@@ -10,45 +10,56 @@ from bisect import bisect_left
 
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        return s.lengthOfLIS_nlogn(nums)
+        return self.method1(nums)
     
-    ## O(nlogn)
-    def lengthOfLIS_nlogn(self, nums: List[int]) -> int:
-         dp = []
-         for x in nums:
-             """
-             Return the index of the smallest number in array that is larger than val
-             array is sorted from smallest to largest, use binary search.
-             if not found, return len(array)
-             """
-             index = bisect_left(dp, x)
-             if index == len(dp):
-                 dp.append(x)
-             else:
-                dp[index] = x
-         return len(dp)
+    def method1(self, nums):
+        """
+        Preferred method for solving Longest Increasing Subsequence (LIS) problem.
+        Time: O(nlogn)
+        Space: O(n)
+        """
+        ## maintain an increasing array.
+        increase = []
+        for x in nums:
+            """
+            Return the index of the smallest number in increase that is larger than val.
+            increase is sorted from smallest to largest, use binary search.
+            if not found, return len(array)
+            """
+            index = bisect_left(increase, x)
+            if index == len(increase):
+                increase.append(x)
+            else:
+                increase[index] = x
+                
+        return len(increase)
+            
         
+    
+    def method2(self, nums):
+        """
+        DP
+        dp[i]: the LIS that end with nums[i]
+        Transaction function: 
+        from all j < i find the j that satisfy the following two conditions:
+            (1) nums[i] > nums[j]
+            (2) have largest dp[j]
+        note the j found avove as j'
+        then dp[i] = dp[j'] + 1 
 
-    
-    ## O(n^2)   
-    def lengthOfLIS_n2(self, nums: List[int]) -> int:
-        n = len(nums)
-        if n == 1:
-            return 1
-        cache = [1] * n
+                
+        Time: O(n^2)
+        Space: O(n)
+        """
+        N = len(nums)
+        dp = [1] * N
+        for i in range(1, N):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
         
-        for i in range(n-1, -1, -1):
-            max_v = 0
-            j = i + 1
-            while j <= n - 1:
-                if nums[i] < nums[j]:
-                    max_v = max(max_v, cache[j])
-                    j += 1 
-                else:
-                    j += 1
-            cache[i] = max_v + 1
-                        
-        return max(cache)
+        return max(dp)
+             
     
 if __name__ == '__main__':
     s = Solution()

@@ -1,0 +1,155 @@
+#### Common Table Expressions
+WITH cti_name AS (
+	SELECT * 
+	FROM *
+	WHERE ...
+)
+SELECT *
+FROM cti_name 
+
+##### If statement
+IF expressions are used to return one of two results based on whether inputs to the expressions meet the conditions you specify. 
+They are frequently used in SELECT statements as a compact way to rename values in a column. The basic syntax is as follows:
+
+IF(conditions, value outputted if conditions are met, value outputted if conditions are NOT met)
+
+IF(condition, value outputted if conditions are met,IF(second condition, value output if second conditions are met, value outputed if second conditions are not met))
+
+Example:
+Table:
++---------+-------------------------------------+-------------+---------+--------+--------+------------+----------+---------+------------+
+| book_id | book_name                           | isbn_no     | cate_id | aut_id | pub_id | dt_of_pub  | pub_lang | no_page | book_price |
++---------+-------------------------------------+-------------+---------+--------+--------+------------+----------+---------+------------+
+| BK001   | Introduction to Electrodynamics     | 0000979001  | CA001   | AUT001 | P003   | 2001-05-08 | English  |     201 |      85.00 |
+| BK002   | Understanding of Steel Construction | 0000979002  | CA002   | AUT002 | P001   | 2003-07-15 | English  |     300 |     105.50 |
+| BK003   | Guide to Networking                 | 0000979003  | CA003   | AUT003 | P002   | 2002-09-10 | Hindi    |     510 |     200.00 |
+| BK004   | Transfer  of Heat and Mass          | 0000979004  | CA002   | AUT004 | P004   | 2004-02-16 | English  |     600 |     250.00 |
+
+mysql> SELECT book_name,
+    -> IF(pub_lang="English", "Engllish Book", "Other Lnaguage") AS Language
+    -> FROM book_mast;
+
+
+#### CASE expressions 
+The main purpose of CASE expressions is to return a singular value based on one or more conditional tests. You can think of CASE expressions as an efficient way 
+to write a set of IF and ELSEIF statements. There are two viable syntaxes for CASE expressions. 
+Example:
+CASE 
+	WHEN users.country="US" THEN "In US"
+	WHEN users.country="N/A" THEN "Not Applicable"
+	ELSE "Outside US"
+END AS Country;
+or similarly:
+CASE users.country
+	WHEN "US" THEN "In US"
+	WHEN "N/A" THEN "Not Applicable"
+	ELSE "Outside US"
+END AS Country; 
+
+Example 2:
+SELECT b1.N,
+CASE 
+    WHEN b1.P IS NULL THEN 'root'
+    WHEN EXISTS(SELECT b2.P from BST b2 WHERE b2.P = b1.N) THEN 'inner'
+    ELSE 'leaf'
+END AS NType
+FROM BST b1
+ORDER BY b1.N;
+
+#### Window functions
+AggregateFunction() OVER(PARTITION BY ORDER BY) AS 
+
+##Some aggregate functions:
+ROW_NUMBER(): return a unique number for each row, with rankings arbitrarily assigned in case of a tie
+RANK(): return the same ranking in case of a tie, with gaps in the rankings
+DENSE_RANK(): returns the same ranking in case of a tie, with no gaps in the rankings
+
+#### Window Frames
+SUM(column_name) OVER(PARTITION BY ORDER BY ROWS UNBOUNDED PRECEDING) AS rolling_sum
+AVG(column_name) OVER(PARTITION BY ORDER BY ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING) AS rolling_3_rows --1 row before, current row, and 1 row after
+AVG(column_name) OVER(PARTITION BY ORDER BY ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS rolling_3_rows --2 row before and current row
+LAG(column_name, 1) OVER (PARTITION BY ORDER BY) AS prev_wk_val
+LEAD(column_name, 1) OVER (PARTITION BY ORDER BY) AS next_wk_val
+##
+FIRST_VALUE()
+LAST_VALUE()
+
+#### Column value concatenation
+GROUP_CONCAT(a.last_name ORDER BY a.last_name separator ', ') As actors
+
+#### Date
+SELECT EXTRACT(YEAR FROM date)
+SELECT YEAR(date);
+SELECT DATE(date_time) AS trip_date
+SELECT TIME(date_time) AS trip_time
+DATEDIFF(date1, date2)
+TO_DAYS(date): returns the number of days between a date and year 0 (date "0000-00-00").
+
+#### Get chr from string
+Method 1: LEFT(string, length))
+Method 2: SUBSTRING(string, start, length)
+Use negative index to start from the right side. If length is omitted, from start to the end.
+
+#### Lower/upper case
+LOWER()
+UPPER()
+
+#### Concat
+CONCAT(expression1, expression2, expression3,...)
+Example: 
+SELECT CONCAT(Address, " ", PostalCode, " ", City) AS Address
+FROM Customers;
+
+
+#### Exists
+The EXISTS operator is used to test for the existence of any record in a subquery.
+The EXISTS operator returns TRUE if the subquery returns one or more records.
+Example:
+SELECT column_name(s)
+FROM table_name
+WHERE EXISTS (SELECT column_name FROM table_name WHERE condition);
+
+#### Round down/up
+ROUND(number, decimals)  
+FLOOR(number) -- to largest integer that is less than or equal to number
+CEIL(number) -- returns the smallest integer value that is bigger than or equal to number.
+TRUNCATE(number, decimals) -- truncates a number to the specified number of decimal places.
+
+#### Replace
+REPLACE(str, find_string, replace_with)
+
+#### Power
+POWER(base, exponent)
+
+####Sqrt
+SQRT(number)
+
+#####Update
+UPDATE table_name SET column_name = IF(sex='m','f','m')
+
+#### LIKE
+WHERE CustomerName LIKE 'a%'	#Finds any values that start with "a"
+WHERE CustomerName LIKE '%a'	#Finds any values that end with "a"
+WHERE CustomerName LIKE '%or%'	#Finds any values that have "or" in any position
+WHERE CustomerName LIKE '_r%'	#Finds any values that have "r" in the second position
+WHERE CustomerName LIKE 'a_%'	#Finds any values that start with "a" and are at least 2 characters in length
+WHERE CustomerName LIKE 'a__%'	#Finds any values that start with "a" and are at least 3 characters in length
+WHERE ContactName LIKE 'a%o'	#Finds any values that start with "a" and ends with "o"
+
+### Union
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+#The UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL
+
+#### LIMIT and OFFSET
+## The SQL query below says "return only 10 records, start on record 16 (OFFSET 15)":
+SELECT * FROM Orders LIMIT 10 OFFSET 15
+
+
+#### CAST
+The CAST() function converts a value (of any type) into the specified datatype.
+## syntax: CAST(value AS datatype)
+## datatype: DATE, DATETIME, DECIMAL, TIME, CHAR... 
+## Examples
+SELECT CAST("2017-08-29" AS DATE);

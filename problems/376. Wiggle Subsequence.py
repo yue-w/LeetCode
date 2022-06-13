@@ -27,7 +27,22 @@ class Solution:
                 dp[i][1] = dp[i - 1][1]
         
         return max(dp[N-1])
-      
+    def method2(self, nums):
+        """
+        Same idea with method1. Save space by updating two variables instead of an array
+        Preferred method
+        """
+        N = len(nums)
+        inc = 1
+        dec = 1
+        
+        for i in range(1, N):
+            if nums[i] > nums[i - 1]:
+                dec = inc + 1
+            elif nums[i] < nums[i - 1]:
+                inc = dec + 1
+        
+        return max(inc, dec) 
 """
 DP
 dp[i][0] count of increasing subsequence

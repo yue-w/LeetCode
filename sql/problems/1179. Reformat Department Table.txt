@@ -1,0 +1,18 @@
+
+# Write your MySQL query statement below
+
+SELECT id,
+SUM(if(month='Jan',  revenue, Null)) AS Jan_Revenue,
+SUM(if(month='Feb',  revenue, Null)) AS Feb_Revenue,
+SUM(if(month='Mar',  revenue, Null)) AS Mar_Revenue,
+SUM(if(month='Apr',  revenue, Null)) AS Apr_Revenue,
+SUM(if(month='May',  revenue, Null)) AS May_Revenue,
+SUM(if(month='Jun',  revenue, Null)) AS Jun_Revenue,
+SUM(if(month='Jul',  revenue, Null)) AS Jul_Revenue,
+SUM(if(month='Aug',  revenue, Null)) AS Aug_Revenue,
+SUM(if(month='Sep',  revenue, Null)) AS Sep_Revenue,
+SUM(if(month='Oct',  revenue, Null)) AS Oct_Revenue,
+SUM(if(month='Nov',  revenue, Null)) AS Nov_Revenue,
+SUM(if(month='Dec',  revenue, Null)) AS Dec_Revenue
+FROM Department
+GROUP BY id;
