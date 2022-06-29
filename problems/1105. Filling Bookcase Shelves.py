@@ -4,6 +4,9 @@ from typing import List
 
 class Solution:
     def minHeightShelves(self, books: List[List[int]], shelfWidth: int) -> int:
+        """
+        dp[i]: total height of the shelf when book 1 to i is on the shelf.
+        """
         N = len(books)
         dp = [float('inf') for _ in range(N + 1)]
         ## add a dummy book to make it 1 indexed

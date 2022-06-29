@@ -5,51 +5,29 @@ Created on Fri Oct 16 19:40:13 2020
 @author: wyue
 """
 
-class MinStack(object):
-
+class MinStack:
+    #### method 1 use two stacks:
     def __init__(self):
-        """
-        initialize your data structure here.
-        """
         self.stack = []
-        
+        self.stackmin = []
 
-    def push(self, x):
-        """
-        :type x: int
-        :rtype: None
-        """
-        if not self.stack:
-            self.stack.append([x,0])
+    def push(self, val: int) -> None:
+        if self.stack:
+            self.stack.append(val)
+            self.stackmin.append(min(val, self.stackmin[-1]))
         else:
-            currentMinIndex = self.stack[len(self.stack)-1][1]
-            if x<self.stack[currentMinIndex][0]:
-                self.stack.append([x, len(self.stack)])
-            else:
-                min_index = self.stack[len(self.stack)-1][1]
-                self.stack.append([x,min_index])
-        
+            self.stack.append(val)
+            self.stackmin.append(val)
 
-    def pop(self):
-        """
-        :rtype: None
-        """
-        return self.stack.pop()[0]
-        
+    def pop(self) -> None:
+        self.stack.pop()
+        self.stackmin.pop()
 
-    def top(self):
-        """
-        :rtype: int
-        """
-        return self.stack[len(self.stack)-1][0]
-        
+    def top(self) -> int:
+        return self.stack[-1]
 
-    def getMin(self):
-        """
-        :rtype: int
-        """
-        minIndex = self.stack[len(self.stack)-1][1]
-        return self.stack[minIndex][0]
+    def getMin(self) -> int:
+        return self.stackmin[-1]
 
 stack = MinStack()
 stack.push(-2)

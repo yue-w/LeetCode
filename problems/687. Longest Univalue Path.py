@@ -4,34 +4,36 @@ class TreeNode(object):
         self.val = val
         self.left = left
         self.right = right
-class Solution(object):
-    def longestUnivaluePath(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        self.max = 0
-        self.helper(root)
-        return self.max
+        
+class Solution:
+    def longestUnivaluePath(self, root: TreeNode) -> int:
+        self.rst = 0
+        self.dfs(root)
+        return self.rst
     
-    def helper(self, node):
+
+    def dfs(self, node):
+        ## base case:
         if not node:
             return 0
         
-        left = self.helper(node.left)
-        right = self.helper(node.right)
+        left = self.dfs(node.left)
+        if node.left:
+            if node.left.val == node.val:
+                left += 1
+            else:
+                left = 0
         
-        leftV = 0
-        if node.left and node.val == node.left.val:
-            leftV = 1 + left
-
-        rightV = 0 
-        if node.right and node.val == node.right.val:
-            rightV = 1 + right
-            
-        self.max = max(rightV+leftV, self.max)
+        right = self.dfs(node.right)
+        if node.right:
+            if node.right.val == node.val:
+                right += 1
+            else:
+                right = 0
         
-        return max(leftV, rightV)
+        self.rst = max(self.rst, left + right)
+        return max(left, right)
+        
 
 
 node = TreeNode(5)

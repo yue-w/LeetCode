@@ -11,39 +11,52 @@ from collections import deque
 
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
-        #return self.bfs(root)
-        return self.recursion(root)
+        #return self.method1(root)
+        return self.method2(root)
     
-    def bfs(self, root):
-        rst = []
-        dq = deque() ## Keep entering from right and leaving from left.
-        if root:
-            dq.append(root)
-            while dq:
-                len_curr = len(dq)
-                for i in range(len_curr):
-                    node = dq.popleft()
-                    ## if node is the last one in this level, add it to rst
-                    if i == len_curr - 1:
-                        rst.append(node.val)
-                    ## next level
-                    if node.left:
-                        dq.append(node.left)
-                    if node.right:
-                        dq.append(node.right)
-        return rst
-
-    def recursion(self, root):
-        rst = []
-        self._recursion(root, rst, 0)
-        return rst
-    
-    def _recursion(self, root, rst, level):
-        ## Base case
+    def method1(self, root):
+        """
+        BFS. Preferred method.
+        """
+        from collections import deque
         if not root:
+            return []
+        rst = []
+        
+        dq = deque() ## enter from right, leave from left
+        
+        dq.append(root)
+        while dq:
+            rst.append(dq[-1].val)
+            for _ in range(len(dq)):
+                node = dq.popleft()
+                if node.left:
+                    dq.append(node.left)
+                if node.right:
+                    dq.append(node.right)
+        
+        return rst
+        
+    def method2(self, root):
+        """
+        DFS (Revers in order traversal)
+        """
+        rst = []
+        self.dfs(root, rst, 0)
+        return rst
+        
+    def dfs(self, node, rst, level):
+        ## base cases
+        ## if none
+        if not node:
             return
-        if level == len(rst):
-            rst.append(root.val)
-        self._recursion(root.right, rst, level + 1)
-        self._recursion(root.left, rst, level + 1)
+        
+        ## current level
+        if len(rst) == level:
+            rst.append(node.val)
+            
+        ## next level
+        self.dfs(node.right, rst, level + 1)
+        self.dfs(node.left, rst, level + 1)
+
         

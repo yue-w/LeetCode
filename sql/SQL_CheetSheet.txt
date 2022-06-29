@@ -153,3 +153,14 @@ The CAST() function converts a value (of any type) into the specified datatype.
 ## datatype: DATE, DATETIME, DECIMAL, TIME, CHAR... 
 ## Examples
 SELECT CAST("2017-08-29" AS DATE);
+
+#### Create procedure
+CREATE PROCEDURE ProcedureName ()
+BEGIN
+    DECLARE totalTeacher int default 0;
+    SELECT count(*) into totalTeacher from teachers;
+    SELECT totalTeacher;
+END
+
+#### DELETE
+DELETE FROM table_name WHERE condition;

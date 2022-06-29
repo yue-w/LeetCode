@@ -56,7 +56,16 @@ def dfs_recursion_inorder_LNR(root, rst):
 def dfs_recursion_postorder_LRN():
 	pass 
 
-def def_iteration_postorder_LRN():
+def dfs_iteration_postorder_LRN():
+	pass
+
+def reverse_pre_order_NRL():
+	pass
+
+def reverse_post_order_RLN():
+	pass
+
+def reverse_in_order_RNL():
 	pass
 
 

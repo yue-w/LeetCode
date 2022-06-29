@@ -39,7 +39,7 @@ def partition(A, left, right):
 	L: element larger than pivot
 	X: element not explored yet.
 
-	i, j start from let + 1
+	i start from left + 1
 	j start from left + 1
 	increase t until j == right
 

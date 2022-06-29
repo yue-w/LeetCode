@@ -4,58 +4,75 @@ Created on Fri Nov 13 16:05:42 2020
 
 @author: wyue
 """
+from typing import List
 
-class Solution(object):
-    def isBipartite(self, graph):
+class Solution:
+    def isBipartite(self, graph: List[List[int]]) -> bool:
+        return self.method1(graph)
+        #return self.method2(graph)
+    
+    def method1(self, graph):
         """
-        :type graph: List[List[int]]
-        :rtype: bool
+        DFS
         """
-        ## DFS
-        color = {}
+        n = len(graph)
+        ## group represent the state of a node: 0: not visited, 1: group 1, -1: group 2
+        group = [0 for _ in range(n)]
+        for node in range(n):
+            if group[node] == 0:
+                if not self.dfs(graph, group, node, -1):
+                    return False
         
-        stack = []
+        return True
         
+    def dfs(self, graph, group, node, nxt_group):
+        """
+        Return whther it is a Bipartite. 
+        """
+        ## base case
+        ## if a node has been visited, check whether the 
+        ## group that is supposed to assign to it conflict 
+        ## with it's assigned group
+        if group[node] != 0:
+            return group[node] == nxt_group
         
+        ## group has not been visited, set its group to nxt_group
+        group[node] = nxt_group
+        ## do dfs for each of node's neighbors
+        for i in graph[node]:
+            if not self.dfs(graph, group, i, -nxt_group):
+                return False
+        ## if no conflict found above, return True
+        return True
         
-        
-        # left = set()
-        # right = set()
-        
-        # for tail, heads in enumerate(graph):
-        #     if tail in left:
-        #         current = left
-        #         other = right
-
-        #     elif tail in right:
-        #         current = right
-        #         other  = left
-        #     else:
-
-        #         for head in heads:
-        #             if head in left:
-        #                 right.add(tail)
-        #                 current = right
-        #                 other = left
-        #                 break
-        #             elif head in right:
-        #                 left.add(tail)
-        #                 current = left
-        #                 other = right
-        #                 break
-        #             else:
-        #                 left.add(tail)
-        #                 current = left
-        #                 other = right
-        #                 break
-                        
-        #     for head in heads:
-        #         if not (head in current):
-        #             other.add(head)
-        #         else:
-        #             return False
-
-        # return True
+    def method2(self, graph):
+        """
+        BFS
+        """
+        from collections import deque
+        n = len(graph)
+        ## group represent the state of a node: 0: not visited, 1: group 1, -1: group 2
+        group = [0 for _ in range(n)]
+        for node in range(n):
+            if group[node] == 0:
+                dq = deque()
+                dq.append((node, 1))
+                while dq:
+                    for _ in range(len(dq)):
+                        n, cur_group = dq.popleft()
+                        for i in graph[n]:
+                            ## check every neighbor of node. 
+                            ## if a neighbor is not visted, give it a group (opposite from the 
+                            ## current group) and add it to queue
+                            if group[i] == 0:
+                                dq.append((i, -cur_group))
+                                group[i] = -cur_group
+                            ## else, a neighbor has been visited before, then check whether this 
+                            ## neighbor's group conflict whith the currrent node's group
+                            else:
+                                if cur_group == group[i]:
+                                    return False                             
+        return True
     
 graph = [[1],[0,3],[3],[1,2]]
 print(Solution().isBipartite(graph))

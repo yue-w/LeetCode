@@ -9,6 +9,34 @@ https://leetcode.com/problems/maximal-network-rank/
 import heapq
 class Solution(object):
     def maximalNetworkRank(self, n, roads):
+        return self.method1(n, roads)
+    def method1(self, n, roads):
+        """
+        preferred method.
+        Time: O(n^2)
+        Space: O(n^2)
+        Clarification: the two city under consideration may not be connected.
+        """
+        ## for each node count the edges connect to it.
+        count = [0] * n
+        ## use a matrix[i][j] to represent whether i and j are connected
+        matrix = [[0 for _ in range(n)] for _ in range(n)]
+        
+        for c1, c2 in roads:
+            count[c1] += 1
+            count[c2] += 1
+            matrix[c1][c2] = 1
+            matrix[c2][c1] = 1
+        
+        rst = 0
+        
+        for c1 in range(n):
+            for c2 in range(c1 + 1, n):
+                tem = count[c1] + count[c2] - matrix[c1][c2]
+                rst = max(rst, tem)
+        return rst
+
+    def method2(self, n, roads):
         """
         :type n: int
         :type roads: List[List[int]]
