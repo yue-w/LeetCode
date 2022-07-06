@@ -22,38 +22,18 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
+        #return self.method1(root)
+        return self.method2(root) ## preferred method
+    def method1(self, root):
+        """
+        DFS
+        """
         result = []
         if root == None:
             return result
         self.dfs(root, result, 1)
         return result
 
-    def bfs_queue1(self, root):
-        """
-        BFS method 1. Preferred, use template. 
-        """ 
-        if not root:
-            return []
-        rst = []
-        dq = deque()
-        dq.append(root)
-        while dq:
-            ## Get the number of nodes in the current level, do the following:
-            ## 1. Pop a node from queue. 2. Append the node to a list. 3. Add the children of the node into queue.
-            num_current_level = len(dq)
-            current_level = []
-            for _ in range(num_current_level):
-                node = dq.popleft()
-                current_level.append(node.val)
-                if node.left:
-                    dq.append(node.left)
-                if node.right:
-                    dq.append(node.right)
-            
-            rst.append(current_level)
-
-        return rst
-        
     def dfs(self, root, result, level):
         if root != None:
             if len(result)<level:
@@ -61,44 +41,34 @@ class Solution(object):
             result[level-1].append(root.val)
             self.dfs(root.left, result, level+1)
             self.dfs(root.right, result, level+1)
-
-        return self.bfs_queue2(root)
-
-    def bfs_queue2(self, root): 
+            
+    def method2(self, root):
         """
-        BFS method 2.
-        """   
+        BFS. 
+        """ 
         rst = []
-        if not root:
-            return rst
-        queue = Queue()
-        queue.put(root)
-        nodes_next_level = Queue()
-        nodes_current_level = []
+        dq = deque()
+        if root:
+            dq.append(root)
+        
+        while dq:
+            curr = []
+            for _ in range(len(dq)):
+                node = dq.popleft()
+                curr.append(node.val)
+                if node.left:
+                    dq.append(node.left)
+                if node.right:
+                    dq.append(node.right)
+            rst.append(curr)
 
-        while not queue.empty() or not nodes_next_level.empty():
-            ## if queue is not empty, add its value to nodes_current_level 
-            if not queue.empty():
-                while not queue.empty():
-                    node = queue.get()
-                    nodes_current_level.append(node.val)
-                    if node.left:
-                        nodes_next_level.put(node.left)
-                    if node.right:
-                        nodes_next_level.put(node.right)
-                if nodes_current_level:
-                    rst.append(nodes_current_level)
-            ## if queue is empty, the current level is done, add nodes in current level (saved in nodes_current_level) to rst
-            ## Add nodes of next level (saved in nodex_next_level) into queue, then clean nodes_current_level
-            else:
-
-                queue, nodes_next_level = nodes_next_level, queue
-                nodes_current_level = []
- 
+        
         return rst
+        
 
 
 
+ 
 
 
 root = TreeNode(3)

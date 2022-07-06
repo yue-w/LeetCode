@@ -10,7 +10,7 @@ class Solution:
     def method1(self, nums, k):
         """
         Time: O(n)
-        Space: O(1)
+        Space: O(n)
         """
         copy = nums[:]
         

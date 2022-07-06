@@ -1,39 +1,42 @@
 
 from collections import defaultdict
 import heapq
+
 class Solution:
     def reorganizeString(self, s: str) -> str:
-        counter = defaultdict(int)
-        for i in range(len(s)):
-            counter[s[i]] += 1
-        
-        heap = [(-freq, key) for key, freq in counter.items()]
-        heapq.heapify(heap)
-        
         rst = []
-        while heap:
-            freq1, chr1 = heapq.heappop(heap)
-            freq1 += 1
-            rst.append(chr1)
-            if not heap:
-                if freq1 < 0:
+        
+        freq = defaultdict(int)
+        
+        ## Because heapq prioritize min, we use negative number
+        for char in s:
+            freq[char] -= 1
+        
+        hq = []
+        for char, count in freq.items():
+            hq.append((count, char))
+        heapq.heapify(hq)
+        
+        while hq:
+            ## if there is only one type of character left: 
+            if len(hq) == 1:
+                ## if the only type of character has more than 1 count, return ''
+                if hq[0][0] < -1:
                     return ''
                 else:
+                    rst.append(hq[0][1])
                     break
-            else:
-                freq2, chr2 = heapq.heappop(heap)
-                if chr2 == chr1:
-                    return ''
-                rst.append(chr2)
-                freq2 += 1
-            
-            if freq1 < 0:
-                heapq.heappush(heap, (freq1, chr1))
-            
-            if freq2 < 0:
-                heapq.heappush(heap, (freq2, chr2))
-                
+            else:           
+                count1, char1 = heapq.heappop(hq)
+                rst.append(char1)
+                count1 += 1
+                count2, char2 = heapq.heappop(hq)
+                rst.append(char2)
+                count2 += 1
+                if count1 < 0:
+                    heapq.heappush(hq, (count1, char1))
+                if count2 < 0:
+                    heapq.heappush(hq, (count2, char2))
+
         return ''.join(rst)
-        
-        
         

@@ -2,23 +2,23 @@
 My implementation of the Quicksort algorithm. 
 Sort an arrayof numbers in ascending order.
 """
-def quick_sort(A, left=0, right=None):
-	if right is None:
-		right = len(A) - 1
+def quick_sort(A, start=0, end=None):
+	if end is None:
+		end = len(A) - 1
 	## Base case
-	if left >= right:
+	if start >= end:
 		return
-	pivot_index = find_pivot(left, right)
+	pivot_index = find_pivot(start, end)
 	## swap element at first and pivot_index
-	A[left], A[pivot_index] = A[pivot_index], A[left]
+	A[start], A[pivot_index] = A[pivot_index], A[start]
 	
-	partition_index = partition(A, left, right)
+	left, right = partition(A, start, end)
 	## After calling partition, the A[partition_index] is at right position
 
 	## Recursion, left part
-	quick_sort(A, left, partition_index - 1)
+	quick_sort(A, start,  left)
 	## Recursion, right part
-	quick_sort(A, partition_index + 1, right)
+	quick_sort(A, right, end)
 
 
 
@@ -28,39 +28,40 @@ def find_pivot(left, right):
 	"""
 	return left + (right - left) // 2
 
-def partition(A, left, right):
+def partition(A, start, end):
 	"""
-	P S S S L L L L L X X X X X
-	^		^         ^          
-	0		i         j
-
-	P: Pivot = nums[left]
-	S: element smaller than pivot
-	L: element larger than pivot
-	X: element not explored yet.
-
-	i start from left + 1
-	j start from left + 1
-	increase t until j == right
-
-	at every step, keep i at the first element that is larget than pivot.
-	j as the point to explor next. At the last step, swap nums[left] and nums[i-1]
-	the final state is:
-	S S S S S P L L L L L L
-			  ^         ^          
-			  i         j
+	Quick select (three pointers).
+	Time: O(n)
+	Space: O(1)
+	S: Smaller, E: Equal, U: Unknown, L: larger
+	S S S S E E E E E U U U U U U U L L L L L L L
+			|         |           |
+		   left      curr       right
+	when returned from the recursion, the final state
+	S S S S E E E E E E E E E E E E L L L L L L L
+			|                     |
+		  left                 right (curr)
 	"""
-	pivot = A[left]
-	i = left + 1
-	for j in range(left + 1, right + 1):
-		if A[j] < pivot:
-			A[i], A[j] = A[j], A[i]
-			i += 1
-	## swap A[left] and A[i - 1]
-	A[left], A[i - 1] = A[i - 1], A[left]
-	return i - 1
+	pivot = A[start]
+	left = start
+	curr = left
+	right = end
+
+	while curr <= right:
+		if A[curr] < pivot:
+			A[left], A[curr] = A[curr], A[left]
+			left += 1
+			curr += 1
+		elif A[curr] == pivot:
+			curr += 1
+		else: # A[curr] > pivot
+			A[right], A[curr] = A[curr], A[right]
+			right -= 1
+
+	return left - 1, right + 1
+
 	
 if __name__ == '__main__':
-	A = [3, 2, 1]
+	A = [100,3,2,1,4,6,5,43,43, 7,8, 0]
 	quick_sort(A)
 	print(A)
