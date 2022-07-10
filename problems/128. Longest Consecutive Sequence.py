@@ -2,12 +2,9 @@ from typing import List
 
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        """
-        Time O(n)
-        Space O(n)
-        """
-        return self.method1(nums)
-
+        #return self.method1(nums)
+        return self.method2(nums) ## preferred method
+    
     def method1(self, nums):
         """
         Hashing.
@@ -38,28 +35,29 @@ class Solution:
             rst = max(rst, counter)
         
         return rst
+    
     def method2(self, nums):
+        """
+        Same idea with method1, but a little bit less codes.
+        for a number num in nums, if num-1 is not in nums, then num is the 
+        lower bound of a continuous sequence, we check its upper bound.
+        But if num - 1 is not in nums, then num is not a lower bound, we do
+        not check it.
+        """
+        nums_set = set(nums)
         rst = 0
-        seen = {n for n in nums}
+        for num in nums:
+            ## if num - 1 in nums_set, ignore
+            if num - 1 in nums_set:
+                continue
+            ## if num - 1 not in nums_set, num is the lower bound of a continuous
+            ## sequence. We count how long it is, update rst.
+            curr = 1
+            while num + 1 in nums_set:
+                curr += 1
+                num += 1
+            rst = max(rst, curr)
         
-        while seen:
-            counter = 1
-            pivot = seen.pop()
-            pivot_p = pivot + 1
-            while pivot_p in seen:
-                counter += 1
-                seen.remove(pivot_p)
-                pivot_p += 1
-                
-            pivot_m = pivot - 1
-            while pivot_m in seen:
-                counter += 1
-                seen.remove(pivot_m)
-                pivot_m -= 1
-                
-            rst = max(rst, counter)
-            
-            
         return rst
 
 if __name__ == '__main__':

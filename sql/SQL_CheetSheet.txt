@@ -1,5 +1,5 @@
 #### Common Table Expressions
-WITH cti_name AS (
+WITH cte_name AS (
 	SELECT * 
 	FROM *
 	WHERE ...
