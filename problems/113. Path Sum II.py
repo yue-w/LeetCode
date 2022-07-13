@@ -8,27 +8,31 @@ class TreeNode:
         self.right = right
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
-        rst = []
-        path = []
-        self.dfs(root, targetSum, path, rst)
-        return rst
+        if not root:
+            return []
         
-    def dfs(self, node, remain, path, rst):
-        ## Base case: None
-        if not node:
-            return 
-        ## Base case: leaf node
+        self.rst = []
+        self.target = targetSum
+        curr = [root.val]
+        
+        self.dfs(root, curr, root.val)
+        return self.rst
+    
+    def dfs(self, node, curr, cursum):
+        ## base case: leaf node
         if not node.left and not node.right:
-            if remain - node.val == 0:
-                path.append(node.val)
-                rst.append(path)
-            return 
+            if cursum == self.target:
+                self.rst.append(curr[:])
+            return
         
         if node.left:
-            path_c = path[:]
-            path_c.append(node.val)
-            self.dfs(node.left, remain - node.val, path_c, rst)
+            curr.append(node.left.val)
+            self.dfs(node.left, curr, cursum+node.left.val)
+            ## backtracking 
+            curr.pop()
+            
         if node.right:
-            path_c = path[:]
-            path_c.append(node.val)
-            self.dfs(node.right, remain - node.val, path_c, rst)
+            curr.append(node.right.val)
+            self.dfs(node.right, curr, cursum+node.right.val)
+            ## backtracking
+            curr.pop()

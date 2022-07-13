@@ -3,54 +3,42 @@
 class Solution(object):
     def canChange(self, start, target):
         """
-        :type start: str
-        :type target: str
-        :rtype: bool
+        Use two pointers to check relative positions.
         """
+        
+        ## the count of L and R should be the same
         if start.count('L') != target.count('L'):
             return False
         if start.count('R') != target.count('R'):
             return False
         
-        n = len(start)
-        index = 0
+        """
+        The relative position of L and R should be the same, no interwine,
+        i.e., the index of L and R in start and target should follow the following rules
+        index of 'L' in start should be larger than the index of 'L' in target
+        index of 'R' in start should be smaller than the index of 'R' in target
+        """
+        ## i point to start, j point to target.
         j = 0
-        for index in range(n):
-            if target[index] != 'L':
+        for i in range(len(start)):
+            if start[i] == '_':
                 continue
-            else:
-                j = max(j, index)
             
-            while j <= n:
-                if j == n:
-                    return False
-                if start[j] == 'R':
-                    return False
-                if start[j] == '_':
-                    j += 1
-                else:
-                    j += 1
-                    break  
-                    
-        ## find R
-        j = n - 1
-        for index in range(n - 1, -1, -1):
-            if target[index] != 'R':
-                continue
-            else:
-                j = min(j, index)
+            while j < len(target) and start[i] != target[j]:
+                j += 1
             
-            while j >= -1:
-                if j == -1:
+            ## if find violation, return False
+            if start[i] == 'L':
+                if i < j:
                     return False
-                if start[j] == 'L':
+            
+            if start[i] == 'R':
+                if i > j:
                     return False
-                if start[j] == '_':
-                    j -= 1
-                else:
-                    j -= 1
-                    break    
+            j += 1
+            
         return True
+        
 
                 
             

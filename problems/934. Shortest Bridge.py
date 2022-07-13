@@ -1,92 +1,81 @@
 
-
+from collections import List
 from collections import deque
 
-class Solution(object):
-
-    def shortestBridge(self, grid):
+class Solution:
+    def shortestBridge(self, grid: List[List[int]]) -> int:
         """
-        :type grid: List[List[int]]
-        :rtype: int
+        Search problem.
+        Shortest path -> BFS.
+        """
+        n = len(grid)
+        """
+        the state of the cell
+        -1: island one, 1: island two (goal, if found, return),
+        0: water (not visited), 2: water (visited) 
         """
 
-        self.dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-        self.island = set() #[[False for _ in N] for _ in M]
-        self.find_island(grid)
-        return self.bfs(grid)
-    
-    def bfs(self, grid):
-        dq = deque() ## Enter from right and leve from left
-        for node in self.island:
-            dq.append(node)
+        state = [[0 for _ in range(n)] for _ in range(n)]
+        
+        dirs = [(-1,0),(1,0),(0,-1),(0,1)]
+        
+        ## define the dfs function that finds all cells of island one, mark them as -1
+        def dfs(row, col):
+            ## base case 1: water
+            if grid[row][col] == 0 :
+                return
+            ## base case 2: island one:
+            if state[row][col] == -1:
+                return
             
-
-        water_seen = set()
+            ## if island, mark it as -1
+            ## explore neighbors
+            state[row][col] = -1
+            for dr, dc in dirs:
+                if 0 <= row + dr < n and 0 <= col + dc < n:
+                    dfs(row + dr, col + dc)
+                    
+        ## call dfs for a cell of island one
+        found = False
+        for row in range(n):
+            if found:
+                break
+            for col in range(n):
+                if grid[row][col] == 1:
+                    dfs(row, col)
+                    found = True
+                    break
+        
+        dq = deque()
+        #### add all cells from islend one into the queue
+        for row in range(n):
+            for col in range(n):
+                if state[row][col] == -1:
+                    dq.append((row, col))
+                              
         rst = 0
         
         while dq:
-            num = len(dq)
-            for _ in range(num):
-                node = dq.popleft()
-                i = node[0]
-                j = node[1]
-                
-                for dir in self.dirs:
-                    di = dir[0]
-                    dj = dir[1]
-                    new_i = i + di
-                    new_j = j + dj
-                    
-                    if self.valid(grid, new_i, new_j):
-                        if grid[new_i][new_j] == 1 and (new_i, new_j) not in self.island:
-                            return rst
-                        else:
-                            if (new_i, new_j) not in water_seen:
-                                dq.append((new_i, new_j))
-                                water_seen.add((new_i, new_j))
-                            
-       
             rst += 1
-            
-        return rst
-        
-        
-        
-    def find_island(self, grid):
-        """
-        use dfs to find an island
-        """
-        
-        M = len(grid)
-        N = len(grid[0])
-        
-        for i in range(M):
-            for j in range(N):
-                if grid[i][j] == 1:
-                    self.dfs(grid, i, j)
-                    #print(self.island)
-                    return
-                    
-    def dfs(self, grid, row, col):
-        ## Base case
-        valid = self.valid(grid, row, col)
-        if not valid or grid[row][col] == 0 or (row, col) in self.island:
-            return
-        
-        self.island.add((row, col))
-        
-        for dir in self.dirs:
-            self.dfs(grid, row+dir[0], col+dir[1])
-        
-    
-    def valid(self, grid, row, col):
-        M = len(grid)
-        N = len(grid[0])
-        return row >=0 and row < M and col >=0 and col < N
+            for _ in range(len(dq)):
+                row, col = dq.popleft()
+                for dr, dc in dirs:
+                    if 0 <= row+dr < n and 0 <= col+dc< n:
+                        if state[row+dr][col+dc] == -1 or state[row+dr][col+dc] == 2:
+                            continue
+                        state[row+dr][col+dc] = 2
+                        
+                        ## if find a cell from island two, we did not have 
+                        ## to flip it. rst - 1 and return
+                        if grid[row+dr][col+dc] == 1:
+                            return rst - 1
+                        
+                        dq.append((row+dr, col+dc))
         
 if __name__ == '__main__':
     s = Solution()
-    grid = [[0,1,0],[0,0,0],[0,0,1]]
+    grid = [[0,1],[1,0]]
+    #grid = [[0,1,0],[0,0,0],[0,0,1]]
     #grid = [[0,1],[1,0]]
     print(s.shortestBridge(grid))
 
