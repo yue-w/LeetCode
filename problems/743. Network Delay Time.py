@@ -4,89 +4,44 @@ from typing import List
 
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
-        #return self.method1(times, n, k)
-        return self.method2(times, n, k)
-        #return self.method3(times, n, k)
+        return self.method1(times, n, k)
+        #return self.method2(times, n, k)
+
     
     def method1(self, times, n, k):
         """
-        Dijkstra's algorithm. Do not compute distance from source to every point,
-        just keep the longest time. 
+        Dijkstra's algorithm. 
+        This is a template use case of Dijkstra's algorithm
         Time: O(Elog(E))
-        Space: E
+        Space: O(E)
         """
+        ## build an adjacent list. [time, nxt]
+        ## 1 indexed
+        adj = [[] for _ in range(n + 1)]
+        for i1, i2, time in times:
+            adj[i1].append((time, i2))
         
-        ## Build an adjacent list
-        ## This problem is 1 indexed, so we add a dummy node 0 
-        adlist = [[] for _ in range(n+1)]
-        for time in times:
-            tail, head, weight = time[0], time[1], time[2]
-            adlist[tail].append((head, weight))
-
-        visited = [0] * (n + 1)
+        rsts = [-1] * (n + 1) ## 1 indexed
         
-        rst = 0
-        
-        ## Use a heap. Elements in the heap are tuples
-        ## The first element of tuple is time, the second element of tuple is node
-        hp = [(0, k)]
-
-        while hp:
-            time, tail = heapq.heappop(hp)
-            if visited[tail]:
+        ## heap is (time, index)
+        hq = [(0, k)]
+        heapq.heapify(hq)
+        while hq:
+            time, index = heapq.heappop(hq)
+            if rsts[index] != -1:
                 continue
-            visited[tail] = 1
-            
-            rst = max(rst, time)
-            for head, weight in adlist[tail]:
-                heapq.heappush(hp, (time + weight, head))
+            rsts[index] = time
+            for dt, nxt in adj[index]:
+                if rsts[nxt] != -1:
+                    continue
+                heapq.heappush(hq, (time+dt, nxt))
                 
-        ## check if every node has been visited (ignore dummy node 0)    
-        for i in range(1, n+1):
-            if visited[i] == 0:
+        for i in range(1, n + 1):
+            if rsts[i] == -1:
                 return -1
-
-        else:
-            return rst
-
-    def method2(self, times, n, k):
-        """
-        Dijkstra's algorithm. Comput the time from the source to every point. 
-        Output the largetst one. 
-        Time: O(Elog(E))
-        Space: E
-        """
-        adlist = [[] for _ in range(n+1)]
-        for time in times:
-            tail, head, weight = time[0], time[1], time[2]
-            adlist[tail].append((head, weight))
-
-        visited = [0] * (n + 1)
-
-        time_from_source = [float('inf')] * (n + 1)
-        
-        #hp = [((float('inf')), i) for i in range(1, n + 1)]
-        hp = [(0, k)]
-        heapq.heapify(hp)
-        while hp:
-            delay_time, tail = heapq.heappop(hp)
-            if visited[tail]:
-                continue
-            visited[tail] = 1
-            time_from_source[tail] = delay_time
-            
-            for head, weight in adlist[tail]:
-                if time_from_source[tail] + weight < time_from_source[head]:
-                    heapq.heappush(hp, (time_from_source[tail] + weight, head))
-        
-        ## ignore the dummy node 0
-        rst = max(time_from_source[1:])
-        if rst == float('inf'):
-            return -1
-        else:
-            return rst 
+        return max(rsts)
     
-    def method3(self, times, n, k):
+    def method2(self, times, n, k):
         """
         Floyd's algorithm
         Time: O(n^3)

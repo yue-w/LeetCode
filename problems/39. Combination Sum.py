@@ -3,24 +3,31 @@ from typing import List
 import copy
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        """
+        Time: O(2^n)
+        Space: O(n)
+        """
+        candidates.sort()
         rst = []
         curr = []
-        self.dfs(candidates, target, 0, rst, curr)
+        def dfs(index, cur_sum, curr):
+            ## base case
+            if cur_sum == target:
+                rst.append(tuple(curr[:]))
+                return
+            if cur_sum > target:
+                return
+            
+            for i in range(index, len(candidates)):
+                curr.append(candidates[i])
+                new_cur_sum = cur_sum + candidates[i]
+                
+                dfs(i, new_cur_sum, curr)
+                ## backtracking
+                curr.pop()
+            
+        dfs(0, 0, curr)
         return rst
-
-    def dfs(self, candidates, remain, i, rst, curr):
-        ## Base case
-        if remain == 0:
-            rst.append(curr[:])
-            return
-        if i == len(candidates) or remain < 0:
-            return
-        ## Include candidates[i]
-        curr.append(candidates[i])
-        self.dfs(candidates, remain-candidates[i], i, rst, curr)
-        ## does not include candidates[i]
-        curr.pop()
-        self.dfs(candidates, remain, i + 1, rst, curr)
 
 
 

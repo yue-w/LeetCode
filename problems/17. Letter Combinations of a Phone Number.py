@@ -15,24 +15,23 @@ class Solution:
             '8': 'tuv',
             '9': 'wxyz',
         }
+        
         rst = []
         curr = []
-        self.recursion(rst, curr, 0, digits)
-        return rst
-        
-    def recursion(self, rst, curr, index, digits):
-        ## Base case
-        if len(curr) == len(digits):
-            rst.append(''.join(curr[:]))
-        
-        ## recursion
-        for i in range(index, len(digits)):
-            chars = self.dic[digits[i]]
-            for char in chars:
+        def dfs(index):
+            ## base case
+            if index == len(digits):
+                rst.append(''.join(curr))
+                return
+            for char in self.dic[digits[index]]:
                 curr.append(char)
-                self.recursion(rst, curr, i+1, digits)
-                ## Recover state
+                dfs(index+1)
+                ## backtracking
                 curr.pop()
+            
+        dfs(0)
+        
+        return rst
             
             
         
