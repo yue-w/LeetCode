@@ -39,7 +39,7 @@ class Solution:
         """
         
         time_stmps = []
-        ## iterate through the time stamps, mark 1 for starting , mark 0 for ending.
+        ## iterate through the time stamps, mark 1 for starting , mark -1 for ending.
         for interval in intervals:
             time_stmps.append((interval[0], 1))
             time_stmps.append((interval[1], -1))

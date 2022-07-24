@@ -31,7 +31,7 @@ def find_pivot(left, right):
 def partition(A, start, end):
 	"""
 	Quick select (three pointers).
-	Time: O(n)
+	Time: O(n), where n = end - righ
 	Space: O(1)
 	S: Smaller, E: Equal, U: Unknown, L: larger
 	S S S S E E E E E U U U U U U U L L L L L L L
@@ -62,6 +62,12 @@ def partition(A, start, end):
 
 	
 if __name__ == '__main__':
-	A = [100,3,2,1,4,6,5,43,43, 7,8, 0]
+	A = [100,3,2,1,4,1, 6,5,43,43, 7,8, 0, 3, 100]
 	quick_sort(A)
-	print(A)
+	assert	A == sorted(A)
+	A = [0]
+	quick_sort(A)
+	assert	A == sorted(A)
+	A = [0, 0]
+	quick_sort(A)
+	assert	A == sorted(A)

@@ -1,10 +1,5 @@
 
 #%%
-from sortedcontainers import SortedList
+a = [1,2,3,4]
+print(a[:-1])
 # %%
-table = [[] for _ in range(10)]
-table[0].append(1)
-array = table[1]
-if not array:
-    print("empty")
-

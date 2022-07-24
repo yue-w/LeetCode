@@ -8,7 +8,7 @@ class MyCalendarThree:
 
     def book(self, start: int, end: int) -> int:
         """
-        Time: O(nlogn)
+        Time: O(n^2)
         """
         self.cal.append((start, 1))
         self.cal.append((end, -1))
