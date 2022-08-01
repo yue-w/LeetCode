@@ -3,59 +3,94 @@
 import heapq
 from typing import List
 
+
+
 class Solution:
     def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
-        return self.method1(nums1, nums2, k)
-        
+        #return self.method1(nums1, nums2, k) ## binary search
+        return self.method2(nums1, nums2, k) ## heap.
+    
     def method1(self, nums1, nums2, k):
         """
         Binary search
-        Time: O(log(n1 * n2)) + O(n1 + n2) = o(log(n1 * n2))
+        Time: O(logC) * O(n1 + n2) = O(n1 + n2)
+        Reference: https://youtu.be/TsOzIxkzh1E
         """
-        left = nums1[0] + nums2[0]
-        right = nums1[-1] + nums2[-1]
+        def less_or_equal(nums1, nums2, mid):
+            """
+            Two pointers
+            Return the number of pairs have a sum less than or equal to mid
+            """
+            count = 0
+            j = len(nums2) - 1
+            for i in range(len(nums1)):
+                while j >= 0 and nums1[i] + nums2[j] > mid:
+                    j -= 1
+                count += j + 1
+ 
+            return count
+            
+        ## k may be larger than all possible pairs, so we modify kk if necessary   
+        kk = min(len(nums1) * len(nums2), k)
+        rst = []
+        backup = []
         
-        while left < right:
-            mid = left + (right - left) // 2
-            ct_not_larger = self.count_not_larger(nums1, nums2, mid)
-            if ct_not_larger < k:
-                left = mid + 1
+        low = nums1[0] + nums2[0]
+        high = nums1[-1] + nums2[-1]
+        
+        while low < high:
+            mid = low + (high - low) // 2
+            if less_or_equal(nums1, nums2, mid) < kk:
+                low = mid + 1
             else:
-                right = mid
-        
-        sum_up_bnd = left
-        
-        """
-        the k's smallest sum equals to sum_up_bnd, iterate all possible sums, if
-        the sum is less than sum_up_bnd, put it in rst1, else, put it in rst2.
-        We may need to add some elements to rst1 from rst2.
-        """
-        rst1 = []
-        rst2 = []
+                high = mid
+                
+        ## at this point, low is the threshold
         for i in range(len(nums1)):
             j = 0
-            while j < len(nums2) and nums1[i] + nums2[j] <= sum_up_bnd:
-                if nums1[i] + nums2[j]  < sum_up_bnd:
-                    rst1.append([nums1[i], nums2[j] ])
+            while j < len(nums2):
+                if len(rst) == kk:
+                    return rst
+                if nums1[i] + nums2[j] < low:
+                    rst.append([nums1[i], nums2[j]])
+                    j += 1
+                elif nums1[i] + nums2[j] == low:
+                    backup.append([nums1[i], nums2[j]])
+                    j += 1
                 else:
-                    rst2.append([nums1[i], nums2[j] ])
-                j += 1
-        idx = 0
-        while idx < len(rst2) and len(rst1) < k:
-            rst1.append(rst2[idx])
-            idx += 1
-        return rst1
-    
-    def count_not_larger(self, nums1, nums2, mid):
-        j = len(nums2) - 1
-        count = 0
-        for i in range(len(nums1)):
-            while j >= 0 and nums1[i] + nums2[j] > mid:
-                j -= 1
-            count += j + 1
-                
-        return count
+                    break
+        i = 0
+        while len(rst) < kk:
+            rst.append(backup[i])
+            i += 1
+        
+        return rst
 
+    def method2(self, nums1, nums2, k):
+        """
+        Heap.
+        Time: O(klogk)
+        Reference: https://leetcode.com/problems/find-k-pairs-with-smallest-sums/
+        discuss/84551/simple-Java-O(KlogK)-solution-with-explanation
+        """
+        hq = []
+        ## k may be larger than all possible pairs, so we modify kk if necessary   
+        kk = min(len(nums1) * len(nums2), k)
+        i = 0
+        ## initialize the heapq, put at most kk elements into it
+        while i <= kk and i < len(nums1):
+            heapq.heappush(hq, (nums1[i] + nums2[0], i, 0))
+            i += 1
+        
+        rst = []
+        while len(rst) < kk:
+            sum2, idx1, idx2 = heapq.heappop(hq)
+            rst.append([nums1[idx1], nums2[idx2]])
+            if idx2 + 1< len(nums2):
+                heapq.heappush(hq, (nums1[idx1] + nums2[idx2 + 1], idx1, idx2 + 1))
+            
+        return rst
+                
 
 if __name__ == '__main__':
     s = Solution()

@@ -1,76 +1,60 @@
-
-class Solution(object):
-    def nextPermutation(self, nums):
+from typing import List
+class Solution:
+    def nextPermutation(self, nums: List[int]) -> None:
         """
-        :type nums: List[int]
-        :rtype: None Do not return anything, modify nums in-place instead.
+        Do not return anything, modify nums in-place instead.
+        This problem requires no extra memory, so we implement our own quick_sort without 
+        calling the built in sort() function. 
         """
-        """
-        repetative nums?
-        Two pointers
-        Quick sort
-        """
+        ## corner case
+        if len(nums) <= 1:
+            return 
+        ## right to left, find the first index that decreases
         i = len(nums) - 1
-        while i > 0:
-            if nums[i - 1] >= nums[i]:
-                i -= 1
-            else:
-                break
-        if i > 0:
-            ## find j
+        while i >= 1 and nums[i - 1] >= nums[i]:
             i -= 1
-            j = len(nums) - 1
-            while j > i:
-                if nums[j] > nums[i]:
-                    break
-                else:
-                    j -= 1
-            nums[i], nums[j] = nums[j], nums[i]
-            ## use quick sort to sort nums[i + 1:]
-            #self.quick_sort(nums, i+1, len(nums) - 1)
-            cp = nums[i + 1:]
-            cp.sort()
-            nums[i + 1:] = cp
-        else:
-            #self.quick_sort(nums, 0, len(nums) - 1)
-            nums.sort()
         
-    def quick_sort(self, A, left=0, right=None):
-        if not right:
-            right = len(A) - 1
-        ## Base case
-        if left >= right:
+        ## at this point, i = 0 or nums[i - 1] < nums[i]
+        if i == 0:
+            self.quick_sort(nums, 0, len(nums) - 1)
+        else:
+            i -= 1
+            ## from riht to left find first number that is larger than nums[i]
+            j = len(nums) - 1
+            while j > i and nums[j] <= nums[i]:
+                j -= 1
+            ## swap
+            nums[i], nums[j] = nums[j], nums[i]
+            self.quick_sort(nums, i + 1, len(nums) - 1)
+            
+    def quick_sort(self, nums, start, end):
+        """
+        Sort array nums from start to end (inclusive) inplace.
+        S S S S S E E E E E U U U U U U U U U L L L L
+                  |         |               |
+                 left       cur           right
+        """
+        ## base case
+        if start >= end:
             return
-        pivot_index = self.find_pivot(left, right)
-        ## swap element at first and pivot_index
-        A[left], A[pivot_index] = A[pivot_index], A[left]
-
-        partition_index = self.partition(A, left, right)
-        ## After calling partition, the A[partition_index] is at right position
-
-        ## Recursion, left part
-        self.quick_sort(A, left, partition_index - 1)
-        ## Recursion, right part
-        self.quick_sort(A, partition_index + 1, right)
-
-
-
-    def find_pivot(self, left, right):
-        """
-        This implement return the mid point between left and right
-        """
-        return left + (right - left) // 2
-
-    def partition(self, A, left, right):
-        p = A[left]
-        i = left + 1
-        for j in range(left + 1, right + 1):
-            if A[j] < p:
-                A[i], A[j] = A[j], A[i]
-                i += 1
-        ## swap A[left] and A[i - 1]
-        A[left], A[i - 1] = A[i - 1], A[left]
-        return i - 1
+        pivot = nums[start]
+        left = start
+        cur = start
+        right = end
+        while cur <= right:
+            if nums[cur] == pivot:
+                cur += 1
+            elif nums[cur] > pivot:
+                nums[cur], nums[right] = nums[right], nums[cur]
+                right -= 1
+            else: # nums[cur] < pivot
+                nums[left], nums[cur] = nums[cur], nums[left]
+                cur += 1
+                left += 1
+        ## recursion
+        self.quick_sort(nums, start, left - 1)
+        self.quick_sort(nums, right + 1, end)
+                
 
             
 if __name__ == '__main__':

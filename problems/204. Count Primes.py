@@ -1,27 +1,32 @@
 
-from collections import defaultdict
+
 from math import sqrt
 class Solution:
     def countPrimes(self, n: int) -> int:
+        """
+        Reference: https://youtu.be/Kwo2jkHOyPY
+        Time: n(log(logn))
+        Space: O(n)
+        """
         if n <= 2:
             return 0
 
-        ## tavle stores whether the number is a prime
+        ## table stores whether the number is a prime
         ## consider 1, 2, ..., n - 1
         ## add 0 into the array so that we have 1 index.
-        table = [True] * n
+        table = [1] * n
         table[0] = 0
         table[1] = 0
 
         i = 2
         while i <= sqrt(n):
-            if not table[i]:
+            if table[i] == 0:
                 i += 1
                 continue
-            j = 2
-            while i * j < n:
-                table[i * j] = False
-                j += 1
+            j = i * i
+            while j < n:
+                table[j] = 0
+                j += i
             i += 1
 
         return sum(table)
