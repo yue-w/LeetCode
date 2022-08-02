@@ -3,23 +3,24 @@ from typing import List
 from collections import defaultdict
 class Solution:
     def findMaxLength(self, nums: List[int]) -> int:
-        ## a hash store the first time (index) that the prefix sum 
-        ## have this value
-        seen = defaultdict(int)
-        seen[0] = -1
-        pre_sum = 0
+        """
+        Prefixsum, add 1 if 1, subtract 1 if 0
+        use a hash map to record the first time (index) of a prefixsum.
+        If two indexes have the same prefixsum, there are equal 1 and 0 in between.
+        """
         rst = 0
+        presum = 0
+        ## the first time seen 0 is at -1.
+        first_seen_pos = {0:-1}
         for i in range(len(nums)):
-            if nums[i] == 1:
-                pre_sum += 1
+            if nums[i] == 0:
+                presum -= 1
             else:
-                pre_sum -= 1
-            if pre_sum not in seen:
-                seen[pre_sum] = i
+                presum += 1
+            if presum in first_seen_pos:
+                rst = max(rst, i - first_seen_pos[presum])
             else:
-                curr = i - seen[pre_sum]
-                rst = max(rst, curr)
-                
+                first_seen_pos[presum] = i
         return rst
 
 

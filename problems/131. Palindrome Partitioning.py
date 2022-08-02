@@ -1,9 +1,9 @@
 from typing import List
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        
         """
         Step 1: construct a DP table to lookup
+        dp[i][j]: whether the substring from s[i] to s[j] is parlindrome.
         """
         dp = [[False for _ in range(len(s))] for _ in range(len(s))]
         
@@ -54,16 +54,6 @@ class Solution:
                 curr.append(s[i:j+1])
                 self.dfs(j + 1, s, curr, rst, dp)
                 curr.pop()
-        
-        
-"""
-backtracking, dp.
-dp[i][j]: whether s[i] to s[j] is palindrome.
-dp[i][j] = (dp[i] == dp[j]) and (dp[i + 1][j - 1] is True)
-if dp[i][j] is True, add dp[i][j] into curr and i += 1
-if dp[i][j] is False, add s[i] into curr and i += 1
-if j == len(s), append all elements in curr into rst.
-"""
         
 if __name__ == '__main__':
     s = Solution()

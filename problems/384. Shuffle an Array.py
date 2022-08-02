@@ -11,7 +11,6 @@ class Solution:
     def shuffle(self) -> List[int]:
         ## Fisher–Yates shuffle
         nums = self.nums[:]
-        n = len(nums)
         for i in range(len(nums)-1, 0, -1):
             index = random.randrange(0, i+1)
             nums[i], nums[index] = nums[index], nums[i]

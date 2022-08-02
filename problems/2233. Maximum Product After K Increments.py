@@ -6,7 +6,6 @@ class Solution:
         Time: O(nlogn)
         Space: O(1)
         """
-        ## come back check corner case.
         M = int(1e9+7)
         nums.sort()
         remain = k
