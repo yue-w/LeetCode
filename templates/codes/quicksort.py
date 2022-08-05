@@ -40,7 +40,7 @@ def partition(A, start, end):
 	when returned from the recursion, the final state
 	S S S S E E E E E E E E E E E E L L L L L L L
 			|                     |
-		  left                 right (curr)
+		  left                  right 
 	"""
 	pivot = A[start]
 	left = start

@@ -9,19 +9,18 @@ class TreeNode:
         self.right = right
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
-        self.rst = 0
-        self.dfs(root, 0)
-        return self.rst
-    
-    def dfs(self, node, v):
-        ## base case
-        if not node:
-            return 
-
-        v = 10 * v + node.val
-        ## if leaf node, add val to self.rst
-        if not node.left and not node.right:
-            self.rst += v
-        self.dfs(node.left, v)
-        self.dfs(node.right, v)
+        def dfs(node, cur):
+            ## base case:
+            if not node:
+                return 0
+            cur = 10 * cur + node.val
+            
+            ## leaf node
+            if not node.left and not node.right:
+                return cur
+            
+            return dfs(node.left, cur) + dfs(node.right, cur)
+            
+            
+        return dfs(root, 0)
         

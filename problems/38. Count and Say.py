@@ -11,21 +11,18 @@ class Solution:
         while i <= n:
             left = 0
             right = 0
-            newstring = ''
+            newstring = []
             while right < len(string):
-                if right == len(string) - 1:
-                    newstring += str(right - left + 1) + str(string[left])
-                    break
-                else:
-                    while right < len(string) - 1 and string[right] == string[right + 1]:
-                        right += 1
-                    newstring += str(right - left + 1) + str(string[left])
+                while right < len(string) - 1 and string[right] == string[right + 1]:
                     right += 1
-                    left = right
+                newstring.append(str(right - left + 1))
+                newstring.append(str(string[left]))
+                right += 1
+                left = right
             string = newstring
             i += 1
 
-        return string
+        return ''.join(string)
 
 
 if __name__ == '__main__':

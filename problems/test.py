@@ -1,11 +1,14 @@
 
 #%%
-array = [[1,2,3,4],[5,6,7,8],[9, 10, 11, 12]]
-array_T = list(map(list, zip(*array)))
-print(array)
-print(array_T)
+rst = []
+a = []
+a.append(1)
+rst.append(a)
+a = []
+a.append(2)
+rst.append(a)
+print(rst)
+
 # %%
-array = [[1,2,3,4],[5,6,7,8],[9, 10, 11, 12]]
-for a, b in zip(*array):
-    print(a, b)
+print('a' > 'b')
 # %%
