@@ -1,14 +1,12 @@
-
 #%%
-rst = []
-a = []
-a.append(1)
-rst.append(a)
-a = []
-a.append(2)
-rst.append(a)
-print(rst)
+import bisect
 
+array = [1,3,3,4]
+print(bisect.bisect_left(array, 3))
+print(bisect.bisect_right(array, 3))
 # %%
-print('a' > 'b')
+from sortedcontainers import SortedList
+a = SortedList([1,3,3,4])
+print(a.bisect_left(3))
+print(a.bisect_right(3))
 # %%
