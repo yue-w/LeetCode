@@ -3,6 +3,15 @@ from typing import List
 
 class Solution:
     def wiggleMaxLength(self, nums: List[int]) -> int:
+        #return self.method1(nums)
+        return self.method2(nums)
+    
+    def method1(self, nums):
+        """
+        DP
+        dp[i][0]: increasing sequence, count of wiggle subsequence ending with nums[i] (last step increasing, i.e., nums[i-1]<nums[i]) 
+        dp[i][1] decreasing sequence, count of wiggle subsequence ending with nums[i] (last step decreasing, i.e., nums[i-1]>nums[i]) 
+        """
         N = len(nums)
         
         dp = [[0 for _ in range(2)] for _ in range(N)]
@@ -27,6 +36,7 @@ class Solution:
                 dp[i][1] = dp[i - 1][1]
         
         return max(dp[N-1])
+    
     def method2(self, nums):
         """
         Same idea with method1. Save space by updating two variables instead of an array
@@ -42,12 +52,7 @@ class Solution:
             elif nums[i] < nums[i - 1]:
                 inc = dec + 1
         
-        return max(inc, dec) 
-"""
-DP
-dp[i][0] count of increasing subsequence
-dp[i][1] count of decreasing subsequence
-"""
+        return max(inc, dec)
 if __name__ == '__main__':
     nums = [1,7,4,9,2,5]
     rst = Solution().wiggleMaxLength(nums)

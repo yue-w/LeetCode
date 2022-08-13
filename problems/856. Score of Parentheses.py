@@ -3,7 +3,9 @@ class Solution:
     def scoreOfParentheses(self, s: str) -> int:
         """
         Ideas: 
-        Stack
+        Stack.
+        Push temporary result back into the stack to be combined with other
+        element of the same level.
         """
         stack = []
         curr = 0
