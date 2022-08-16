@@ -4,9 +4,9 @@ class Solution:
     def palindromePartition(self, s: str, k: int) -> int:
         """
         dp[i][k]: the minimumal number of characters need to 
-        change to divide s[: i+1] into k non-empty disjoint 
+        change to divide s[0: i+1] into k non-empty disjoint 
         substrings such that each substring is a palindrome.
-        dp[i][k] = min(dp[0:j][k-1] + helper(s[j:i+1])) 
+        dp[i][k] = min(dp[0:j+1][k-1] + helper(s[j:i+1])) 
         for j = 0, 1, ... i, where helper(s[j:i+1]) return
         the number of characters need to change to make 
         s[j:i+1] parlindrom.
@@ -22,8 +22,8 @@ class Solution:
         ## initialize corner values
         dp[0][0] = 0
         
-        ## helper2 is called to prepre data if method 1 below is used.
-        self.helper2(s, n)
+        ## helper is called to compute a cache of the min count of change needed to make s[i:j+1] to parlindrome
+        self.helper(s, n)
         
         for i in range(1, n + 1):
             for kk in range(1, min(i, k) + 1):
@@ -40,21 +40,8 @@ class Solution:
         
         return dp[n][k]
     
-    def helper(self, s, j, i):
-        """
-        Retun the count of chracters needed to be 
-        changed to make s[j: i+1] parlindrome 
-        """
-        count = 0
-        while j < i:
-            if s[j] != s[i]:
-                count += 1
-            i -= 1
-            j += 1
         
-        return count
-        
-    def helper2(self, s, n):
+    def helper(self, s, n):
         ## compute a cache of the min count of change needed to make s[i:j+1] to parlindrome
         self.count = [[0 for _ in range(n + 1)] for _ in range(n + 1)]
         
@@ -66,5 +53,8 @@ class Solution:
                     self.count[i][j] = self.count[i+1][j-1]
                 else:
                     self.count[i][j] = self.count[i+1][j-1] + 1
+        
+
+
         
 

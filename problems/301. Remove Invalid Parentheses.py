@@ -15,6 +15,7 @@ Example:
 s = '(((())'
 the two '(' we select must be the last continuouse two '(' 
 """
+
 class Solution:
     def removeInvalidParentheses(self, s: str) -> List[str]:
         def dfs(curr, unmatchedleft, idx):
@@ -24,9 +25,8 @@ class Solution:
             if len(curr) > finallength:
                 return
             if idx == len(s):
-                if len(curr) == finallength:
-                    if unmatchedleft == 0:
-                        rst.append(''.join(curr))
+                if len(curr) == finallength and unmatchedleft == 0:
+                    rst.append(''.join(curr))
                 return
             
             if s[idx] != '(' and s[idx] != ')':
@@ -86,7 +86,7 @@ class Solution:
         if not rst:
             return ['']
         return rst
-            
+        
 if __name__ == '__main__':
     s = "(j))(" #")(v)((m(())()("
     rst = Solution().removeInvalidParentheses(s)
