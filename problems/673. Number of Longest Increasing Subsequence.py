@@ -6,7 +6,7 @@ class Solution:
         """
         DP
         length[i]: length of longest increasing subsequence ending with nums[i]
-        count[i][1]: count of longest increasing subsequence ending with nums[i]
+        count[i]: count of longest increasing subsequence ending with nums[i]
         Time: O(n^2)
         Space: O(n)
         

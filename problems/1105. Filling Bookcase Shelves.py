@@ -5,7 +5,8 @@ from typing import List
 class Solution:
     def minHeightShelves(self, books: List[List[int]], shelfWidth: int) -> int:
         """
-        dp[i]: total height of the shelf when book 1 to i is on the shelf.
+        DP sequence II
+        dp[i]: the minimum possible height for books[0:i+1]
         """
         N = len(books)
         dp = [float('inf') for _ in range(N + 1)]
@@ -15,6 +16,8 @@ class Solution:
         for i in range(1, N+1):
             curh = 0 #books[i][0]
             curw = 0 #books[i][1]
+            ## if j is the first book on this level, then j-1 is the book on the previouse level
+            ## try all possible j
             for j in range(i, 0, -1):
                 curh = max(curh, books[j][1])
                 curw += books[j][0]
@@ -23,6 +26,7 @@ class Solution:
                 dp[i] = min(dp[i], dp[j - 1] + curh)
                 
         return dp[-1]
+                
                 
         
 if __name__ =='__main__':

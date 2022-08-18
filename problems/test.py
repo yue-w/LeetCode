@@ -1,7 +1,8 @@
 
-class Solution:
-    def countSpecialNumbers(self, n: int) -> int:
-        
-
-rst = Solution().countSpecialNumbers(20)
-print(rst)
+a = [1,2,3,4]
+b = tuple(a)
+print(a)
+print(b)
+a.append(5)
+print(b)
+print(a)

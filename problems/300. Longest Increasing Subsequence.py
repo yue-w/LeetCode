@@ -5,27 +5,22 @@ Created on Sun Mar 27 12:54:47 2022
 @author: wyue
 Leetcode 300
 """
-from typing import List
 from bisect import bisect_left
-
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        return self.method1(nums)
+        return self.method1(nums) ## preferred method
+        #return self.method2(nums)
     
     def method1(self, nums):
         """
         Preferred method for solving Longest Increasing Subsequence (LIS) problem.
         Time: O(nlogn)
         Space: O(n)
+        Reference: https://youtu.be/Q6KyDl_xiIg
         """
         ## maintain an increasing array.
         increase = []
         for x in nums:
-            """
-            Return the index of the smallest number in increase that is larger than val.
-            increase is sorted from smallest to largest, use binary search.
-            if not found, return len(array)
-            """
             index = bisect_left(increase, x)
             if index == len(increase):
                 increase.append(x)
@@ -38,7 +33,7 @@ class Solution:
     
     def method2(self, nums):
         """
-        DP
+        DP:
         dp[i]: the LIS that end with nums[i]
         Transaction function: 
         from all j < i find the j that satisfy the following two conditions:
