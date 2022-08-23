@@ -15,7 +15,7 @@ class Solution:
         for i in range(1, n):
             prefixsum[i] = prefixsum[i-1] + nums[i]
         
-        ## Sorted dictionary, first element is start of a segment, second element is end of a segment 
+        ## Sorted List, first element is start of a segment, second element is end of a segment 
         segments = SortedList()
         segments.add((0, n-1))
         

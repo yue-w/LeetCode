@@ -1,3 +1,4 @@
+
 class Solution:
     def largestPalindromic(self, num: str) -> str:
         from collections import Counter, deque
@@ -28,15 +29,14 @@ class Solution:
                 dq = deque(dq) 
             elif counter['0'] >= 2 :
                 v = counter['0'] // 2
-                # dq = [0] * v + dq + [0] * v
-                for _ in range(v):
-                    dq.append('0')
-                    dq.appendleft('0')
+                dq.extendleft(['0'] * v)
+                dq.extend(['0'] * v)
+
             
         for i in range(1, 10):
             v = counter[str(i)] // 2
             for _ in range(v):
                 dq.append(str(i))
                 dq.appendleft(str(i))
-        print(counter)
+        #print(counter)
         return ''.join(dq)
