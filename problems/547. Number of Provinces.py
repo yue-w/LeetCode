@@ -91,6 +91,7 @@ class Solution:
         """
         N = len(isConnected)
         self.parents = [i for i in range(N)]
+        ## think rank as the longest path from parents to leaf
         self.rank = [0] * N
         
         for row in range(N):
@@ -114,11 +115,16 @@ class Solution:
     def union(self, x, y):
         px = self.find(x)
         py = self.find(y)
+        ## merge the smaller one into the larger one.
+        ## no need to modify rank because after merging, the longest length of the
+        ## tree being merged into did not change
         if self.rank[px] < self.rank[py]:
             self.parents[px] = py
         elif self.rank[px] > self.rank[py]:
             self.parents[py] = px
         else:
+            ## equal rank, the rank (longest path from parent to child) of the 
+            ## one being merged into needs to increase by 1 
             self.parents[py] = px
             self.rank[px] += 1
             
