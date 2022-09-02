@@ -5,7 +5,8 @@ class Solution:
         Define dp[i][j]: maximum coins you can collect by bursting the balloons nums[i:j+1]
         Transition function:
         define k as the last ballon you burst in nums[i:j+1]
-        ... i xxxxxxx k xxxxxx j...
+        ... [i xxxxxxx k xxxxxx j]...
+        dp[i][j] = max(dp[i][j], dp[i][k-1] + nums[i - 1] * nums[k] * nums[j + 1] + dp[k+1][j]), for k = i, i + 1, ... j
         reference: https://www.youtube.com/watch?v=BBdHB2jjNUA
         """
 
@@ -26,6 +27,10 @@ class Solution:
                     dp[i][j] = max(dp[i][j], dp[i][k-1] + nums[i - 1] * nums[k] * nums[j + 1] + dp[k+1][j])
                     
         return dp[1][n]
+                
+        
+        
+
                 
         
         

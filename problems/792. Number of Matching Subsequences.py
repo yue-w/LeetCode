@@ -103,14 +103,14 @@ class Solution:
         return rst
     
     def method3(self, s, words):
-        pass
         """
+        Reference: https://youtu.be/2eDAImbp8C4
         Time: O(n * k)
         Space: O(m)
         State machine
         """
-        #### nxt_idx with dimension (len(s) * 26), nxt_idx[i][j] is at i look right, what
-        #### is the index in s of letter from a to z
+        #### nxt_idx with dimension (len(s) * 26), nxt_idx[i][j] is at index i, look right, what
+        #### is the index in s of letter x (x from a to z)
         ## make s 1 indexed, the first index 0 is dummy index so that the first letter in
         ## s can also been seen when looked right
         m = len(s)
@@ -122,7 +122,7 @@ class Solution:
         for i in range(m, 0, -1):
             nxt_idx[i-1] = nxt_idx[i][:]
             nxt_idx[i-1][ord(s[i]) - ord('a')] = i
-        
+
         counter = Counter(words)
         
         rst = 0

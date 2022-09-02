@@ -5,7 +5,7 @@ class Solution:
     
     def method1(self, jobs, k):
         """
-        Trim branch.
+        Binary search. Trim branch.
         """
         left = 0
         right = sum(jobs) * 2
