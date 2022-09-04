@@ -1,8 +1,5 @@
 
-
-# # from functools import lru_cache
-# # from functools import cache
-# from functools import cache
+from functools import cache
 class Solution:
     def numberOfWays(self, startPos: int, endPos: int, k: int) -> int:
         
@@ -10,7 +7,6 @@ class Solution:
             # base case
             if count == k: 
                 if pos == endPos:
-                    self.rst += 1
                     v = 1
                 else:
                     v = 0
@@ -21,20 +17,13 @@ class Solution:
             if (pos, count) in memo:
                 return memo[(pos, count)] 
             
-            self.rst += dfs(pos - 1, count + 1)
-            self.rst += dfs(pos + 1, count + 1)
+            left = dfs(pos - 1, count + 1)
+            right = dfs(pos + 1, count + 1)
 
+            memo[(pos, count)] = left + right
+            return left + right
         
-        self.rst = 0
-        memo = {}
-        self.rst = dfs(startPos, 0)
-        return self.rst
 
-# startPos=1
-# endPos=1000
-# k=999
-startPos=1
-endPos=2
-k=3
-rst = Solution().numberOfWays(startPos, endPos, k)
-print(rst)
+        memo = {}
+        rst = dfs(startPos, 0)
+        return rst % (10**9+7)

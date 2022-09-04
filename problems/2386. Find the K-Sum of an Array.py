@@ -19,8 +19,8 @@ class Solution:
         
         hq = []
         heapq.heappush(hq, (absv[0], 0))
-        rst = maxsum
-        counter = 0
+
+
         for i in range(k-1):
             curr, idx = heapq.heappop(hq)
             if i == k - 2:
