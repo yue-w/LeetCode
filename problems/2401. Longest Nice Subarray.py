@@ -1,36 +1,22 @@
 from typing import List
 
 class Solution:
+    """
+    Two pointers. Bit.
+    Reference: https://youtu.be/stXRx71prEE
+    """
     def longestNiceSubarray(self, nums: List[int]) -> int:
-        # two pointers
-        rst = 1
-        i = 0
-        j = 1
-        curr = nums[0]
-        while j < len(nums):
-            while j < len(nums) and curr & nums[j] == 0:
-                curr = (curr | nums[j]) 
+        
+        j = 0
+        rst = 0
+        state = 0
+        n = len(nums)
+        for i in range(n):
+            while j < n and ((state & nums[j] == 0)):
+                state += nums[j]
                 j += 1
-                rst = max(rst, j - i)
-            curr = self.subtract(curr, nums[i])
-            i += 1
-        
-        return rst
-        
-        
-    def subtract(self, curr, pre):
-        rst = curr
-        ptr = 1
-        while curr and pre:
-
-            cu = curr % 2
-            pr = pre % 2
-            curr = curr//2
-            pre = pre//2
-            if pr == 1 and cu == 1:
-                rst -= ptr
-            ptr = ptr << 1
-
+            rst = max(rst, j - i)
+            state -= nums[i]
         return rst
 
         

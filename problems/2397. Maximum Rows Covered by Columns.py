@@ -2,60 +2,42 @@ from typing import List
 
 class Solution:
     def maximumRows(self, mat: List[List[int]], cols: int) -> int:
-        def dfs(curr, idx):
-            ## base case
-            self.rst = max(self.rst, len(curr))
-            if idx == mm:
-                return
-
+        """
+        Reference: https://youtu.be/66pxL0zkDUg
+        """
+        def bit_count_one(n: int) -> int:
+            """
+            Hanning mask, count how many bits are 1
+            """
+            count = 0
+            while n:
+                count += 1
+                n &= n - 1
+            return count
             
-            for r in range(idx, mm):
-                ## select row r
-                curr.append(r)
-                count = 0
-                for c in range(n):
-                    if selected[c] > 0:
-                        count += 1
-                legit = True
-                cc = []
-                for c in range(n):
-                    if newmat[r][c] == 1:
-                        if selected[c] == 0:
-                            count += 1
-                        selected[c] += 1
-                        cc.append(c)
-                        
-                        if count > cols:
-                            legit = False
-                            break
-                if legit:
-                    dfs(curr, r + 1) 
-                # backtracking
-                curr.pop()
-                for c in cc:
-                    if newmat[r][c] == 1:
-                        selected[c] -= 1
-                
-
-  
+            
+            return number
         m = len(mat)
         n = len(mat[0])
-        newmat = []
-        extra_rst = 0
-        for row in range(m):
-            if sum(mat[row]) == 0:
-                extra_rst += 1
-            else:
-                newmat.append(mat[row][:])
-        
-        mm = len(newmat)
-        curr = []
-        idx = 0
-    
-        self.rst = 0
-        selected = [0] * n
-        dfs(curr, idx)
-        
-        return self.rst + extra_rst
-        
-        
+        upper_bnd = 2 ** n
+
+        rst = 0
+        # cast each row to an integer
+        rows = [0] * m
+        for r in range(m):
+            number = ['0', 'b'] + [str(num) for num in mat[r]]
+            number = ''.join(number)
+            number = int(number, 2)
+            rows[r] = number
+
+        for c in range(upper_bnd):
+            if bit_count_one(c) != cols:
+                continue
+            
+            curr = 0
+            for r in range(m):
+                if (rows[r] & c) == rows[r]:
+                    curr += 1
+            
+            rst = max(rst, curr)
+        return rst
