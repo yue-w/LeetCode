@@ -3,6 +3,9 @@ from collections import deque
 
 class Solution:
     def maximumRobots(self, chargeTimes: List[int], runningCosts: List[int], budget: int) -> int:
+        """
+        Time: O(nlogn)
+        """
         n = len(chargeTimes)
         left = 0
         right = n
@@ -17,6 +20,8 @@ class Solution:
     def in_budget(self, k, chargeTimes, runningCosts, budget):
         n = len(chargeTimes)
         sumv = 0
+        # monotonic decreasing deque, this keeps the left most number in deque
+        # as the smallest number in moving window of length k
         dq = deque()
         for i in range(n):
             sumv += runningCosts[i]

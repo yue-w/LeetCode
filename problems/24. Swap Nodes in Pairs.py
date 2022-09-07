@@ -8,36 +8,15 @@ class ListNode:
 
 class Solution:
     def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head:
-            return head
-        if not head.next:
-            return head
-        
         dummy = ListNode()
         dummy.next = head
         pre = dummy
-        cur = head
-        nxt = head.next
         
-        while cur and nxt:
-            nxtnxt = nxt.next
-            pre.next = nxt
-            nxt.next = cur
-            cur.next = nxtnxt
-            
-            if nxtnxt and nxtnxt.next:
-                curcp = cur
-                cur = nxtnxt
-                nxt = nxtnxt.next
-                pre = curcp
-            else:
-                break
-        
-        
+        while pre.next and pre.next.next:
+            curr = pre.next
+            nxt = curr.next
+            # pre -> curr -> nxt -> nxt.next is changed to pre -> nxt -> curr -> nxt.next 
+            pre.next, nxt.next, curr.next = nxt, curr, nxt.next
+            pre = curr
         
         return dummy.next
-        
-"""
-3 nodes?
-5 nodes?
-"""
