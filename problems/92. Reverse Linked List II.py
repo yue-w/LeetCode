@@ -7,29 +7,45 @@ class ListNode:
 
 from typing import Optional
 
+
 class Solution:
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
-        return self.method1(head, left, right)
+        return self.method2(head, left, right)
+        #return self.method1(head, left, right)
     
     def method1(self, head, left, right):
         """
-        Preferred method
+        multiple passes
         Time: O(n)
         Space: O(1)
-        multiple passes
         """
+        def reverse(head):
+            """
+            Reverse a LinkedList using "Sliding window"
+            """
+            pre = None
+            cur = head
+
+            while cur:
+                nxt = cur.next
+                cur.next = pre
+                pre = cur
+                cur = nxt
+
+            return pre
+        
         dummy = ListNode()
         dummy.next = head
         
-        ## truncate the original LinkedList into three parts:
-        ## with their head bing first, second, and third
+        ## divide the original LinkedList into three parts:
+        ## with their head being first, second, and third
         
         ## get the head of the third part
         cur = dummy
         for _ in range(right):
             cur = cur.next
         third = cur.next
-        ## break the second from the third
+        # break the second from the third
         cur.next = None
         
         ## get the head of the second part
@@ -41,7 +57,7 @@ class Solution:
         cur.next = None
         
         ## reverse the second part using a "sliding window"
-        second = self.reverse(second)
+        second = reverse(second)
         
         ## the head of the first part is head
         first = dummy
@@ -57,26 +73,36 @@ class Solution:
         
         return dummy.next
     
-    def reverse(self, head):
-        """
-        Reverse a LinkedList using "Sliding window"
-        """
-        pre = None
-        cur = head
-        
-        while cur:
-            nxt = cur.next
-            cur.next = pre
-            pre = cur
-            cur = nxt
-        
-        return pre
-        
     def method2(self, head, left, right):
         """
         One pass.
         """
-        pass
+        dummy = ListNode()
+        dummy.next = head
+        
+        prev = dummy
+        curr = head
+        
+        # step 1: shift to left and fine the end of first part (the node before the head of second part)
+        for _ in range(left - 1):
+            prev = prev.next
+            curr = curr.next
+        end_of_first = prev
+        
+        # step 2: reverse the second (between left and right)
+        for _ in range(right - left + 1):
+            temp_nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp_nxt
+        
+        # step 3: adjust the three parts
+        end_of_first.next.next = curr
+        end_of_first.next = prev
+        
+        
+        return dummy.next
+            
 
 if __name__ == '__main__':
     head = ListNode(1)

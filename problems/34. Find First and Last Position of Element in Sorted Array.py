@@ -1,45 +1,59 @@
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+from typing import List
 
-import queue
-from typing import Optional
 class Solution:
-    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        #return self.helper(root.left, root.right)
-        return self.helper_it(root)
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        #return self.method1(nums, target)
+        return self.method2(nums, target) # preferred method
+
+    def method1(self, nums, target):
+        """
+        Implement binary search
+        """
+        rst = [-1, -1]
+        if not nums:
+            return rst
         
+        low = 0
+        up = len(nums) - 1
         
-    def helper(self, left, right):
-        if left is None:
-            return right is None
-        elif right is None:
-            return False
-        else:
-            if left.val != right.val:
-                return False
+        ## find start: find the first element that is not smaller than target.
+        while low < up:
+            mid = low + (up - low) // 2
+            if nums[mid] < target:
+                low = mid + 1
             else:
-                return self.helper(left.right, right.left) and self.helper(left.left, right.right)
-    ## Iteration method    
-    def helper_it(self, root):
-        q = queue.Queue()
-        q.put(root)
-        q.put(root)
-        while not q.empty():
-            left = q.get()
-            right = q.get()
-            if (left is None) and (right is None):
-                continue
-            if (left is None) or (right is None):
-                return False
-            if left.val != right.val:
-                return False
-            q.put(left.left)
-            q.put(right.right)
-            q.put(left.right)
-            q.put(right.left)
+                up = mid
             
-        return True
+        if nums[low] == target:  
+            rst[0] = low
+        
+        ## find end: find the last element that is not larger than target.
+        low = 0
+        up = len(nums) - 1
+        while low < up:
+            mid = low + (up - low + 1) // 2
+            if nums[mid] > target:
+                up = mid - 1
+            else:
+                low = mid   
+            
+        if nums[low] == target:  
+            rst[1] = low
+        
+        return rst
+    
+    def method2(self, nums, target):
+        """
+        call bisect functions
+        """
+        if not nums:
+            return [-1, -1]
+        left = bisect.bisect_left(nums, target)
+        if left == len(nums):
+            return [-1, -1]
+        elif nums[left] != target:
+            return [-1, -1]
+        
+        right = bisect.bisect_right(nums, target) - 1
+
+        return [left, right]
