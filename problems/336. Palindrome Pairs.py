@@ -55,5 +55,7 @@ class Solution:
 if __name__ == '__main__':
     words = ["abcd","dcba","lls","s","sssll"]
     #words = ["a",""]
+    
+    words = ["abc","cba"]
     rst = Solution().palindromePairs(words)
     print(rst)

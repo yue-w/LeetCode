@@ -14,13 +14,9 @@ class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
         #return self.method1(inorder, postorder)
         #return self.method2(inorder, postorder)
-        return self.method3(inorder, postorder) ## preferred method
-
+        return self.method3(inorder, postorder) # preferred method, more efficient
+    
     def method1(self, inorder, postorder):
-        """
-        Copy the arrays in iteration.
-        Easier to code, more readable, but less efficient.
-        """
         root = self.recursion(inorder, postorder)
         
         return root
@@ -29,6 +25,8 @@ class Solution:
         ## base case:
         if len(inorder) == 1:
             return TreeNode(inorder[0])
+        if not inorder:
+            return None
         
         node = TreeNode(postorder[-1])
         
@@ -90,10 +88,6 @@ class Solution:
         return root
         
     def recursion3(self, dic, inorder, postorder, low, high):
-        """
-        instart, inend: starting and ending index of inorder
-        postart, poend: starting and ending index of postorder
-        """
         ## base case:
         if low > high:
             return None
@@ -105,8 +99,10 @@ class Solution:
         return node
 
 if __name__ == '__main__':
-    inorder = [1,2,3,4]
-    postorder = [3,2,4,1]
+    # inorder = [1,2,3,4]
+    # postorder = [3,2,4,1]
+    inorder = [2,1]
+    postorder = [2,1]
     rst = Solution().buildTree(inorder, postorder)
     print(rst.val)
     

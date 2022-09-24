@@ -16,16 +16,11 @@ class Solution:
         Space: O(1)
         
         The following customerized sorting is used
-        ## [1,1] and [1,0] is a tie on '1', by default, the one with smaller 
-        ## second element come first.
-        b = [[1,1],[2,1],[1,-1],[3,0]]
-        b.sort()
-        print(b)
-        ## [1,1] and [1,0] is a tie on '1', we can change it to making the one with larger 
-        ## second element come first.
+        e.g., [1,1] and [1,0] is a tie on '1', by default, the one with smaller 
+        second element come first.
+        we can change it to making the one with larger second element come first.
         a = [[1,1],[2,1],[1,-1],[3,0]]
         a.sort(key=lambda x: (x[0], -x[1]))
-        print(a).
         In the following case when a starting point overlap with an end point, 
         make sure the starting point comes first after sorting (to add 1 before subtract 1).
                     1            -1

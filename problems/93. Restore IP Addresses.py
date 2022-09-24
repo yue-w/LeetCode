@@ -1,15 +1,14 @@
 
 from typing import List
 
-from pyrsistent import s
+
 class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
         return self.method1(s)
         
-        
     def method1(self, s):
         """
-        dfs, backing track
+        dfs, backtracking
         """
         rst = []
         curr = []
@@ -18,8 +17,9 @@ class Solution:
         
     def dfs(self, rst, curr, index, s):
         ## base case
-        if index == len(s) and len(curr) == 4:
-            rst.append('.'.join(curr))
+        if index == len(s): 
+            if len(curr) == 4:
+                rst.append('.'.join(curr))
             return 
         if len(curr) == 4 and index < len(s):
             return
@@ -27,9 +27,9 @@ class Solution:
         for i in range(1, 4):
             tem = s[index: index + i]
             if not tem:
-                continue 
+                return 
             if (len(tem) > 1 and tem[0] == '0') or int(tem) > 255:
-                continue
+                return
             curr.append(tem)
             self.dfs(rst, curr, index + i, s)
             ## backing track
