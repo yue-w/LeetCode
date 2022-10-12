@@ -28,13 +28,11 @@ class Solution(object):
                 j += 1
             
             ## if find violation, return False
-            if start[i] == 'L':
-                if i < j:
-                    return False
+            if start[i] == 'L' and i < j:
+                return False
             
-            if start[i] == 'R':
-                if i > j:
-                    return False
+            if start[i] == 'R' and i > j:
+                return False
             j += 1
             
         return True

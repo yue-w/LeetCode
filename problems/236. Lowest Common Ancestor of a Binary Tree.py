@@ -22,6 +22,7 @@ class Solution:
             return 0
         left = self.dfs(node.left, p, q)
         right = self.dfs(node.right, p, q)
+        # whether node itself is p or q
         slf = int(node.val == p.val or node.val == q.val)
         if left + right + slf == 2 and not self.rst:
             self.rst = node

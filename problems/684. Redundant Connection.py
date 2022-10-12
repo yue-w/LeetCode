@@ -1,5 +1,6 @@
 
 from typing import List
+from collections import deque
 
 class Solution:
     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
@@ -8,7 +9,7 @@ class Solution:
         
     def method1(self, edges):
         """
-        Topological sort of BFS
+        Topological sort with BFS
         find the nodes that have a degree of 2
         Time: O(n)
         Space: O(n)
@@ -50,7 +51,6 @@ class Solution:
         Space: O(n)
         """
         n = len(edges)
-        #self.father = [0] * (n + 1)
         self.father = [i for i in range(n + 1)]
         def find(i):
             """

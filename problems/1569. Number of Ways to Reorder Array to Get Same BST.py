@@ -5,9 +5,8 @@ import math
 class Solution:
     def numOfWays(self, nums: List[int]) -> int:
         
-        #self.rst = 1
         M = int(1e9+7)
-        return (self.dfs(nums) % M) - 1
+        return (self.dfs(nums) % M) - 1 # need to return how many method other than the given method, so minus 1
      
         
     def dfs(self, array):

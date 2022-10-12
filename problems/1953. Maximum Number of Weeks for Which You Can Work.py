@@ -1,4 +1,4 @@
-
+from typing import List
 import heapq
 class Solution:
     def numberOfWeeks(self, milestones: List[int]) -> int:

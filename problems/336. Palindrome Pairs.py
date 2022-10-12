@@ -7,26 +7,8 @@ class Solution:
             Helper function. Whether string is a palindrome
             Time: O(len(string))
             Space: O(1)
-            This function TLE for long input string. Don't know why
             """
             return check == check[::-1]
-        
-        
-        # def is_palindrome(string):
-        #     """
-        #     Helper function. Whether string is a palindrome
-        #     Time: O(len(string))
-        #     Space: O(1)
-        #     This function TLE for long input string. Don't know why
-        #     """
-        #     left = 0
-        #     right = len(string) - 1
-        #     while left < right:
-        #         if string[left] != string[right]:
-        #             return False
-        #         left += 1
-        #         right -= 1 
-        #     return True
         
         rst = []
         ## use a hash map to check whether a string

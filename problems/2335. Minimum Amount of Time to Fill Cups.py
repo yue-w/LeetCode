@@ -1,4 +1,6 @@
 from typing import List
+import heapq
+
 class Solution:
     def fillCups(self, amount: List[int]) -> int:
         #return self.method1(amount) ## use heap

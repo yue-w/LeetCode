@@ -27,10 +27,10 @@ class Solution:
         """
         rst = 0
 
-        ## When an interval covers multiple elements have the same value, there
-        ## may will be duplicate. To avoid the duplicate, we only use the first
-        ## smallest element. So when finding the left bound, we find left_smaller or equal.
-        ## but when finding the right bound, we find the right_smaller. 
+        ## When an interval covers multiple elements of the same value, there
+        ## will be duplicate. To avoid the duplicate, we only use the first
+        ## smallest element. So after finding the left bound, we find left_smaller or equal.
+        ## but after finding the right bound, we find the right_smaller. 
         ## left_smaller[i]: the index of the left most number that is smaller or equal than arr[i]
 
         ## right_smaller[i]: the index of the right most number that is smaller than arr[i]

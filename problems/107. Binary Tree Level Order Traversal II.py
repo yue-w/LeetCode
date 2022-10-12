@@ -1,5 +1,7 @@
 
 from typing import Optional, List
+from collections import deque
+
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -10,8 +12,8 @@ class TreeNode:
 class Solution:
     def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
         #return self.method1(root)
-        return self.method2(root)
-        #return self.method3(root)
+        #return self.method2(root)
+        return self.method3(root) # preferred method
     
     def method1(self, root):
         """

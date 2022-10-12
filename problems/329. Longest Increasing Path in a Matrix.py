@@ -28,7 +28,6 @@ class Solution:
                 dfs(row, col)
         
         rst = max(max(memo[r]) for r in range(M))
-        print(memo)
         
         return rst
         
