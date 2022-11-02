@@ -27,8 +27,10 @@ class Solution:
                 tem_most_common += 1
                 if tem_most_common != 0:
                     tem.append(tem_most_common)
+            ## if not last round
             if len(tem) > 0: 
                 rst += n + 1
+            ## if last round, i.e., nothing to be put into the heapq.
             else:
                 rst += k
             for count in tem:

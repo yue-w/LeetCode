@@ -1,14 +1,19 @@
 
-# Write your MySQL query statement below
+# #### Solution 1: Subqueary
+SELECT name
+FROM SalesPerson 
+WHERE sales_id NOT IN (
+    (SELECT o.sales_id FROM Orders o LEFT JOIN Company c ON o.com_id = c.com_id WHERE c.name='RED')
+)
 
-SELECT name 
-FROM SalesPerson
-WHERE sales_id not in (
-    SELECT o.sales_id
-    FROM Orders o
-    LEFT JOIN Company c
-    ON o.com_id = c.com_id
-    WHERE c.name = 'RED'
-);
 
-# No order or have order but orders are not with RED
+
+#### Solution 2: right join
+SELECT s.name
+FROM Company c 
+    LEFT JOIN Orders o 
+        ON o.com_id = c.com_id AND c.name = "RED"
+    RIGHT JOIN SalesPerson s
+        ON o.sales_id = s.sales_id
+WHERE o.com_id IS NULL
+

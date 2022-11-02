@@ -1,0 +1,5 @@
+
+SELECT e2.name
+FROM (SELECT managerId FROM Employee GROUP BY managerId HAVING COUNT(id) >= 5) e1
+LEFT JOIN Employee e2
+ON e1.managerId = e2.id;

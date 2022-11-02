@@ -1,0 +1,6 @@
+
+
+SELECT email AS Email
+FROM Person
+GROUP BY Email
+HAVING COUNT(id) > 1;

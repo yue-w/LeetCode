@@ -11,7 +11,7 @@ class Solution:
         p = 0
         for b in range(len(buses)):
             cap = capacity
-            ## for every passenger that can go into a car, check whether we can board
+            ## for every passenger that can go into a bus, check whether we can board
             ## before this person
             while p < len(passengers) and cap > 0 and passengers[p] <= buses[b]:
                 ## if there is a spot before passengers[p], take it

@@ -1,0 +1,20 @@
+
+
+
+## Method 1
+SELECT player_id, device_id
+FROM Activity
+WHERE (player_id, event_date) IN (SELECT player_id, MIN(event_date) FROM Activity GROUP BY player_id)
+
+## Method 2
+# WITH cte AS
+# (
+#     SELECT player_id, MIN(event_date) AS min_date
+#     FROM Activity
+#     GROUP BY player_id
+# )
+# SELECT a.player_id, a.device_id
+# FROM Activity a
+# LEFT JOIN cte
+# ON a.player_id = cte.player_id 
+# WHERE a.event_date = cte.min_date;

@@ -12,7 +12,7 @@ class Solution:
         return self.method2(root, key) ## preferred method
     def method1(self, root, key):
         """
-        More codes, but does not delete a pointer that may be pointed by.
+        More codes, but does not delete a pointer that may be pointed to.
         """
         
         def dfs(node, key):
@@ -71,15 +71,12 @@ class Solution:
                 else:
                     ## find the left most node in the right subtree
                     left = node.right
-                    pre = left
-                    while left:
-                        pre = left
+                    while left.left:
                         left = left.left
-                    val = pre.val
-                    node.val = val
-                    
+                        print(left.val)
+                    node.val = left.val
                     ## recursion
-                    node.right = dfs(node.right, val)
+                    node.right = dfs(node.right, left.val)
                     
             return node
             

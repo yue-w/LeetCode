@@ -12,7 +12,6 @@ class Solution:
             Return whether can finish in h hours if eat k bananas / h
             """
             count = 0
-            remain = 0
             i = 0
             while i < len(piles):                
                 count += math.ceil(piles[i]/k)

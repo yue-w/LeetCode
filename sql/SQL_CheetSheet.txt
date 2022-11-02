@@ -5,12 +5,9 @@ WITH cte_name AS (
 	WHERE ...
 )
 SELECT *
-FROM cti_name 
+FROM cte_name 
 
 ##### If statement
-IF expressions are used to return one of two results based on whether inputs to the expressions meet the conditions you specify. 
-They are frequently used in SELECT statements as a compact way to rename values in a column. The basic syntax is as follows:
-
 IF(conditions, value outputted if conditions are met, value outputted if conditions are NOT met)
 
 IF(condition, value outputted if conditions are met,IF(second condition, value output if second conditions are met, value outputed if second conditions are not met))
@@ -39,7 +36,9 @@ CASE
 	WHEN users.country="N/A" THEN "Not Applicable"
 	ELSE "Outside US"
 END AS Country;
+
 or similarly:
+
 CASE users.country
 	WHEN "US" THEN "In US"
 	WHEN "N/A" THEN "Not Applicable"
@@ -78,7 +77,6 @@ LAST_VALUE()
 GROUP_CONCAT(a.last_name ORDER BY a.last_name separator ', ') As actors
 
 #### Date
-SELECT EXTRACT(YEAR FROM date)
 SELECT YEAR(date);
 SELECT DATE(date_time) AS trip_date
 SELECT TIME(date_time) AS trip_time
@@ -86,7 +84,6 @@ DATEDIFF(date1, date2)
 TO_DAYS(date): returns the number of days between a date and year 0 (date "0000-00-00").
 
 #### Get chr from string
-Method 1: LEFT(string, length))
 Method 2: SUBSTRING(string, start, length)
 Use negative index to start from the right side. If length is omitted, from start to the end.
 
@@ -164,3 +161,22 @@ END
 
 #### DELETE
 DELETE FROM table_name WHERE condition;
+
+#### In MySQL, the Inner Join is the Default Join
+
+#### Declare a variable
+DECLARE M INT 
+SET M = 1
+
+#### IFNULL
+# Method 2
+SELECT 
+(
+    IFNULL(
+        (SELECT DISTINCT Salary 
+        FROM Employee
+        ORDER BY Salary DESC
+        LIMIT 1 OFFSET 1), 
+        NULL)
+    
+) AS SecondHighestSalary;

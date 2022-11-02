@@ -14,8 +14,8 @@ class Solution:
         seen1.add(node1)
         seen2 = set()
         seen2.add(node2)
-        dq.append((node1, 1))
-        dq.append((node2, 2))
+        dq.append((node1, 1)) # node1, group 1
+        dq.append((node2, 2)) # node2, group 2
         candidate = []
         steps = 0
         while dq:
@@ -77,8 +77,8 @@ class Solution:
                 if maxdis < minmax:
                     minmax = maxdis
                     idx = i
-                if maxdis == minmax:
-                    idx = min(idx, i)
+                # if maxdis == minmax:
+                #     idx = min(idx, i)
 
         return idx
                     

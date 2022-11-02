@@ -1,0 +1,6 @@
+
+
+SELECT name AS Name
+FROM Candidate c1
+INNER JOIN (SELECT candidateId FROM Vote GROUP BY (candidateId) ORDER BY COUNT(candidateId) DESC LIMIT 1) AS winner
+WHERE c1.id = winner.candidateId

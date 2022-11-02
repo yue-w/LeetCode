@@ -53,7 +53,10 @@ class Codec:
         
         return nodes[0]
 
-# Your Codec object will be instantiated and called as such:
-# ser = Codec()
-# deser = Codec()
-# ans = deser.deserialize(ser.serialize(root))
+if __name__ == '__main__':
+    from tools import deserialize, drawtree
+    root = '[1,2,3,null,null,4,5]'
+    root = deserialize(root)
+    c = Codec()
+    string = c.serialize(root)
+    print(string)

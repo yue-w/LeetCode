@@ -1,0 +1,26 @@
+
+
+# Method 1
+SELECT d.name AS Department, e.name AS Employee, e.salary AS Salary
+FROM Employee e
+LEFT JOIN Department d
+ON e.departmentId = d.id
+WHERE (e.departmentId, e.salary) IN (SELECT departmentId, MAX(salary) FROM Employee GROUP BY departmentId)
+
+# Method 2
+## CTE
+
+WITH cte AS(
+SELECT MAX(salary) AS max_salary, departmentId
+FROM Employee
+GROUP BY departmentId
+)
+
+SELECT d. name AS Department, e.name AS Employee, e.salary AS SALARY
+FROM Employee e
+LEFT JOIN Department d
+ON e.departmentId = d.id
+LEFT JOIN cte
+ON e.departmentId = cte.departmentId
+WHERE e.salary = cte.max_salary ;
+

@@ -11,21 +11,19 @@ class Solution:
         """
         if maxMove == 0:
             return 0
-        self.rst = 0
+        
         dirs = ((-1, 0), (1, 0), (0, -1), (0, 1))
         memo = {}
         
         def dfs(row, col, moves):
             ## base case
             if row == -1 or row == m or col == -1 or col == n:
-                self.rst += 1
+                
                 return 1
             if moves == 0:
                 return 0
             if (row, col, moves) in memo:
                 return memo[(row, col, moves)]
-
-
 
             tem = 0
             for dr, dc in dirs:

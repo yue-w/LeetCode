@@ -19,34 +19,40 @@ class Solution:
         Space: O(1) if not considering recursion
         """
         def dfs(node):
-            if not node:
-                return
+            """
+            flatten the tree, and return the last node of the list
+            """
+            # base case: leaf node:
+            if not node.left and not node.right:
+                return node
             
-            if not node.left:
-                dfs(node.right)
-                return
-            
-            nleft = node.left
-            nright = node.right
-            
-            dfs(nleft)
-            dfs(nright)
-            
-            node.left = None
-            node.right = nleft
-            
-            while nleft.right:
-                nleft = nleft.right
-            nleft.right = nright
-            
+            if node.left:
+                left = node.left
+                node.left = None
+                lst_node_lft = dfs(left)
+                right = node.right
+                node.right = left
+                lst_node_lft.left = None
+                lst_node_lft.right = right
+                if right:
+                    return dfs(right)
+                else:
+                    return lst_node_lft
+            else:
+                return dfs(node.right)
+                     
+        if not root:
+            return 
         dfs(root)
+        
             
     def method2(self, root):
         """
         Iteration.
         Time: O(n)
         Space: O(1)
-        Reference: https://leetcode.com/problems/flatten-binary-tree-to-linked-list/discuss/1208004/Extremely-Intuitive-O(1)-Space-solution-with-Simple-explanation-Python
+        Reference: https://leetcode.com/problems/flatten-binary-tree-to-linked-list
+        /discuss/1208004/Extremely-Intuitive-O(1)-Space-solution-with-Simple-explanation-Python
         """
         cur = root
         while cur:

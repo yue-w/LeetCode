@@ -1,0 +1,8 @@
+
+
+
+SELECT d.dept_name AS dept_name, IF(s.number IS NULL, 0, s.number) AS student_number
+FROM Department d
+LEFT JOIN (SELECT dept_id, COUNT(student_id) AS number FROM Student GROUP BY dept_id) AS s 
+ON s.dept_id = d.dept_id
+ORDER BY student_number DESC, dept_name

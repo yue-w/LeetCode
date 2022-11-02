@@ -7,11 +7,11 @@ class Solution:
         rst = 0
         for r in range(n):
             counter[tuple(grid[r])] += 1
-        #print(counter)
+        
         col = [0] * n
         for c in range(n):
             for r in range(n):
                 col[r] = grid[r][c]
-            #print(col)
+            
             rst += counter[tuple(col)]
         return rst

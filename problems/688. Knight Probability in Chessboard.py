@@ -9,7 +9,7 @@ class Solution:
             if cur_steps == k:
                 memo[(row, col, cur_steps)] = cur_p
                 return cur_p
-                return
+                
             if (row, col, cur_steps) in memo:
                 return memo[(row, col, cur_steps)] 
                 

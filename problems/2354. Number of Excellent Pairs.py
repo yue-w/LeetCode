@@ -1,6 +1,6 @@
 
 from typing import List
-from collections import Counter
+
 class Solution:
     def countExcellentPairs(self, nums: List[int], k: int) -> int:
         rst = 0
@@ -18,9 +18,8 @@ class Solution:
             array[i] = bit_count_one(n)
         
         array.sort()
-        print(array)
         
-        ## (n1, n2), n1 != n2
+        ## (n1, n2), where n1 != n2
         ## two pointers
         n = len(array)
         j = n - 1

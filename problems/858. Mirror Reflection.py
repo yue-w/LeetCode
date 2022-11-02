@@ -3,6 +3,8 @@ class Solution:
     def mirrorReflection(self, p: int, q: int) -> int:
         """
         Reference: https://youtu.be/RB22pCOZFts
+        gcd: greatest common divisor
+        lcm: least common multiple
         """
         lcm = abs(p*q) / math.gcd(p, q)
         height = lcm

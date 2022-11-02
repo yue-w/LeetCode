@@ -26,7 +26,6 @@ class Solution:
                 case1 = recursion(i + 2)
             else:
                 case1 = False
-            #memo[i + 2] = case1
             if i < len(nums) - 2 and nums[i] == nums[i + 1] and nums[i + 1] == nums[i + 2]:
                 case2 = recursion(i + 3)
             else:

@@ -23,7 +23,8 @@ class Solution:
                     cur_sum += dfs(curr + nums[i], target)
             memo[curr] = cur_sum
             return cur_sum
-                
+
+        ## memo[val]: how many ways to generate sum equals val        
         memo = {}
         return dfs(0, target)
     

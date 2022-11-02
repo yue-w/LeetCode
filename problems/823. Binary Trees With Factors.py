@@ -8,7 +8,6 @@ class Solution:
         Time: O(n^1.5 * logn)
         """
         arr.sort()
-        arr = [float(i) for i in arr]
         counter = Counter(arr)
         
         ## binary_search

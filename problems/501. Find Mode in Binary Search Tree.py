@@ -7,6 +7,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
+
 class Solution:
     def findMode(self, root: Optional[TreeNode]) -> List[int]:
         """
@@ -76,7 +77,6 @@ class Solution:
             
             dfs(node.left)
             count(node.val)
-            self.curfreq = 0
             dfs(node.right)
             
         def count(curval):
@@ -95,6 +95,7 @@ class Solution:
         ## call dfs first time to set value to maxfrequence
         dfs(root)
         self.modefreq = self.maxfreq
+        self.curfreq = 0
         ## call dfs again to find the modes
         dfs(root)
         
