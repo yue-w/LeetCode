@@ -35,7 +35,7 @@ class Solution:
     
     def method2(self, heights):
         """
-        The idea is the same as method1, but one pass. 
+        The idea is the same  as method1, but one pass. 
         """
         heights = [0] + heights + [0]
         ## monotonic increasing stack
@@ -45,7 +45,9 @@ class Solution:
                 while stack and heights[i] < heights[stack[-1]]:
                     index = stack.pop()
                     height = heights[index]
-                    width = i - stack[-1] - 1 
+                    right = i
+                    left = stack[-1]
+                    width = right - left - 1 
                     rst = max(rst, width * height)
                 stack.append(i)
             

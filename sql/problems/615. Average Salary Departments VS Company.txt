@@ -1,0 +1,47 @@
+
+# ## Method 1: Use CTE
+WITH cte AS(
+    SELECT DATE_FORMAT(pay_date, '%Y-%m') pay_month, AVG(amount) average
+    FROM Salary
+    GROUP BY pay_month
+)
+
+SELECT tem.pay_month, tem.department_id,
+CASE 
+WHEN tem.amount >  cte.average THEN 'higher'
+WHEN tem.amount <  cte.average THEN 'lower'
+ELSE 'same'
+END AS comparison
+FROM (
+    SELECT DATE_FORMAT(s.pay_date, '%Y-%m') AS pay_month, AVG(amount) AS amount, e.department_id AS department_id
+    FROM Salary s
+    LEFT JOIN Employee e
+    ON s.employee_id = e.employee_id
+    GROUP BY pay_month, e.department_id
+) AS tem
+LEFT JOIN cte
+ON tem.pay_month = cte.pay_month;
+
+
+## Method 2: Use Subquery
+
+# SELECT tem.pay_month, tem.department_id,
+# CASE 
+# WHEN tem.amount >  cte.average THEN 'higher'
+# WHEN tem.amount <  cte.average THEN 'lower'
+# ELSE 'same'
+# END AS comparison
+# FROM (
+#     SELECT DATE_FORMAT(s.pay_date, '%Y-%m') AS pay_month, AVG(amount) AS amount, e.department_id AS department_id
+#     FROM Salary s
+#     LEFT JOIN Employee e
+#     ON s.employee_id = e.employee_id
+#     GROUP BY pay_month, e.department_id
+# ) AS tem
+# LEFT JOIN 
+# (
+#     SELECT DATE_FORMAT(pay_date, '%Y-%m') pay_month, AVG(amount) average
+#     FROM Salary
+#     GROUP BY pay_month
+# ) AS cte
+# ON tem.pay_month = cte.pay_month;

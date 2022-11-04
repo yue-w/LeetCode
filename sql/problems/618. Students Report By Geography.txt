@@ -1,0 +1,21 @@
+
+## Reference: https://www.youtube.com/watch?v=e-I9SxbLky8
+SELECT  
+MAX(CASE
+WHEN continent = "America" THEN name
+ELSE NULL
+END) AS "America",
+MAX(CASE
+WHEN continent = "Asia" THEN name
+ELSE NULL
+END) AS "Asia",
+MAX(CASE
+WHEN continent = "Europe" THEN name
+ELSE NULL
+END) AS "Europe"
+FROM
+(SELECT name, continent, 
+ROW_NUMBER() OVER(PARTITION BY continent ORDER BY name ASC) AS gp
+FROM Student ) AS tem
+GROUP BY tem.gp
+ORDER BY tem.gp;

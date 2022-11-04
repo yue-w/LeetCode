@@ -35,7 +35,6 @@ class Solution:
                 visited[nxt] = True
             
         ## now only circle left. find the longest one
-        rst = 0
         max_muti = 0
         max_2ele = 0
         for node in range(n):

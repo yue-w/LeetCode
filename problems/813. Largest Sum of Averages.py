@@ -23,7 +23,7 @@ class Solution:
         for i in range(1, n + 1):
             for kk in range(1, min(i, k) + 1):
                 cursum = 0
-                for j in range(i, kk-2, -1):
+                for j in range(i, kk-1, -1):
                     cursum += nums[j]
                     dp[i][kk] = max(dp[i][kk], dp[j-1][kk - 1] + cursum/(i - j + 1))
         rst = 0

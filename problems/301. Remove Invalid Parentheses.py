@@ -89,5 +89,6 @@ class Solution:
         
 if __name__ == '__main__':
     s = "(j))(" #")(v)((m(())()("
+    s = ")(f"
     rst = Solution().removeInvalidParentheses(s)
     print(rst)

@@ -1,16 +1,17 @@
-from typing import List
+
+"""
+Same solution as 51.
+"""
 
 class Solution:
-    def solveNQueens(self, n: int) -> List[List[str]]:
-        
+    def totalNQueens(self, n: int) -> int:
         def dfs(row):
             """
             only call this function if row, col are valid
             """
             ## base case
             if row == n:
-                tem = [''.join(curr[i]) for i in range(n)]
-                rst.append(tem)
+                self.rst += 1
                 return
             
             for c in range(n):
@@ -56,8 +57,8 @@ class Solution:
             
             return True
         
-        rst = []
+        self.rst = 0
         curr = [['.' for _ in range(n)] for _ in range(n)]
         dfs(0)
             
-        return rst
+        return self.rst
