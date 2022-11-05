@@ -1,0 +1,32 @@
+
+
+# Write your MySQL query statement below
+
+
+## Join, Group By, Sub query
+
+
+## method 1. Subquery
+SELECT p.project_id, e.employee_id 
+FROM Project p
+INNER JOIN Employee e
+ON p.employee_id  = e.employee_id 
+WHERE (p.project_id, e.experience_years) IN (
+    SELECT p.project_id, MAX(e.experience_years) 
+    FROM Project p
+    INNER JOIN Employee e 
+    ON p.employee_id = e.employee_id 
+    GROUP BY project_id) 
+
+
+
+# ## method 2. CTE
+# WITH tem AS(
+#     SELECT p.project_id, e.employee_id, e.experience_years
+#     FROM Project p
+#     INNER JOIN Employee e
+#     ON p.employee_id  = e.employee_id
+# )
+# SELECT tem.project_id, tem.employee_id 
+# FROM tem
+# WHERE (tem.project_id, tem.experience_years) IN (SELECT tem.project_id, MAX(tem.experience_years) FROM tem GROUP BY project_id) 

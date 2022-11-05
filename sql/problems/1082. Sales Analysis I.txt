@@ -1,0 +1,10 @@
+
+
+SELECT seller_id
+FROM Sales
+GROUP BY seller_id
+HAVING SUM(price) = (SELECT MAX(sum_p) 
+    FROM 
+    (SELECT SUM(price) AS sum_p FROM Sales GROUP BY seller_id) AS tem)
+
+

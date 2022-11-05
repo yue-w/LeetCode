@@ -25,7 +25,6 @@ class Solution:
         
         prevword = defaultdict(set) 
         
-        rst = []
         dq = deque()
         dq.append(beginWord)
         visited = set()
@@ -41,8 +40,7 @@ class Solution:
                     if newword in visited:
                         continue
                     prevword[newword].add(word)
-                    visiting.add(newword)
-                    
+                    visiting.add(newword)               
 
             for nv in visiting:
                 visited.add(nv)  
@@ -55,10 +53,14 @@ class Solution:
         
         self.rst = []
         path = [endWord]
+        ## from the end word, trace back to find the all the words that led to the end word.
         self.dfs(path, prevword, endWord, beginWord)
         return self.rst
 
     def dfs(self, path, prevword, curword, beginWord):
+        """
+        Use dfs to trace back from endword to the beginword.
+        """
         if curword == beginWord:
             pathcp = path[:]
             pathcp.reverse()
