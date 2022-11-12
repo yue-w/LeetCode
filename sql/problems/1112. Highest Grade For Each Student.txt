@@ -1,0 +1,19 @@
+
+
+# ## method 1: self join
+# SELECT e1.student_id, MIN(e1.course_id) AS course_id, e1.grade
+# FROM Enrollments e1
+# LEFT JOIN (SELECT student_id, MAX(grade) AS max_g FROM Enrollments GROUP BY student_id) e2
+# ON e1.student_id = e2.student_id
+# WHERE e1.grade = e2.max_g
+# GROUP BY e1.student_id
+# ORDER BY e1.student_id ASC
+
+## method 2: window functions
+SELECT student_id, course_id, grade
+FROM 
+    (SELECT student_id, course_id, grade, 
+     ROW_NUMBER() OVER(PARTITION BY student_id ORDER BY grade DESC, course_id ASC) as rk 
+     FROM Enrollments) AS t
+WHERE rk = 1
+ORDER BY student_id ASC

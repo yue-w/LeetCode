@@ -38,7 +38,6 @@ class Solution:
                     found = False
                     break
             if found:
-                
                 return i
             
         return -1

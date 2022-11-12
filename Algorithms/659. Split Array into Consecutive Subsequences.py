@@ -14,9 +14,6 @@ class Solution:
         Greedy + two hash
         Time: O(n)
         """
-        
-        
-        
         ## remain is how many occurances remain 
         remain = Counter(nums)
         ## key is a sequence ending with "key" and with a length not smaller than 3, value is how many of such sequence are there
@@ -49,8 +46,8 @@ class Solution:
         heap
         Time: O(nlogn)
         """
-        ## heap. element is a tuple (first_element, second_element), first_element is the last element of the sequence, 
-        ## second_element is he length of the sequence 
+        ## heap. elements are tuples (first_element, second_element), first_element is the last element of the sequence, 
+        ## second_element is the length of the sequence 
         hq = []
         
         for n in nums:

@@ -1,0 +1,24 @@
+
+# Method 1: Window function
+SELECT Business_id
+FROM(
+    SELECT *,
+    AVG(occurences) OVER(PARTITION BY event_type) AS avg_occ
+    FROM Events
+) AS tem
+WHERE tem.occurences  > tem.avg_occ
+GROUP BY Business_id
+HAVING COUNT(Business_id) > 1;
+
+# ## Method 2: Join
+# SELECT e.business_id
+# FROM Events e
+# LEFT JOIN (
+#     SELECT event_type, AVG(occurences) AS avg_occ
+#     FROM Events e
+#     GROUP BY event_type
+# ) AS t
+# ON e.event_type = t.event_type
+# WHERE e.occurences > t.avg_occ
+# GROUP BY e.business_id 
+# HAVING COUNT(e.business_id ) > 1

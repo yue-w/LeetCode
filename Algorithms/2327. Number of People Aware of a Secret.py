@@ -41,7 +41,6 @@ class Solution:
         """
         ## dp is 1 indexed. dp[0] is dummy
         dp = [0] * (n + 1)
-        dp[1] = 1
         
         ## diff is the fifference betwen day i and day i - 1
         ## diff[i] = dp[i] - dp[i - 1], or dp[i] = dp[i-1] + diff[i]

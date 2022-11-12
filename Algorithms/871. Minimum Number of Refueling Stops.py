@@ -12,7 +12,7 @@ class Solution:
         
         hq = []
         cur_fuel = startFuel
-        cur_dis = 0
+
         i = 0
         count = 0
         

@@ -12,7 +12,7 @@ class Solution:
         ## how many numbers that is not larger than n has a 1 at its ith digit
         for i in range(1, N+1):
             
-            # group 1: the digit from i+1 to N are smaller than n's corresponding digits
+            # group 1: the digit from i+1 to N are smaller than the corresponding digits of n
             # example: 
             # n =  3 4 5 8 7
             #          i
@@ -23,7 +23,7 @@ class Solution:
             rst += (n // (10 ** i)) * (10 ** (i- 1))
             
             
-            # Group 2: the digit from i+1 to N equals to n's corresponding digits and the ith digit is larger than 1
+            # Group 2: the digit from i+1 to N equals to n's corresponding digits and the ith digit of n is larger than 1
             # example:
             # n =  3 4 3 8 7
             #          i

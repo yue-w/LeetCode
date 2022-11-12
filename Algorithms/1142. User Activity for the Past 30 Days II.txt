@@ -1,0 +1,9 @@
+
+
+SELECT ROUND( IFNULL(SUM(sess) / COUNT(DISTINCT user_id), 0), 2) AS average_sessions_per_user
+FROM(
+    SELECT user_id, COUNT(DISTINCT session_id) as sess
+    FROM Activity
+    WHERE DATEDIFF(activity_date, "2019-07-27") BETWEEN -29 AND 0
+    GROUP BY user_id
+) tem
