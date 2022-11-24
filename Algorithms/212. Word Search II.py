@@ -38,16 +38,13 @@ class Solution:
                 visited[row+dr][col+dc] = 0
             
             curr.pop()
-            
-            
+                  
         def del_node(curr):
             curr_node = root
             for char in curr:
                 curr_node = curr_node.nxt[ord(char) - ord('a')]
                 curr_node.count -= 1
-            
-            
-            
+  
         ## step 1: build trie
         root = TrieNode()
         for word in words:
@@ -60,7 +57,6 @@ class Solution:
                 curr_node.count += 1
             curr_node.isword = True
             
-        
         ## step 2: DFS
         M = len(board)
         N = len(board[0])
@@ -75,8 +71,7 @@ class Solution:
                 visited[row][col] = 1
                 dfs(curr, row, col, cur_node)
                 visited[row][col] = 0  
-                
-        
+
         return list(rst)
         
 

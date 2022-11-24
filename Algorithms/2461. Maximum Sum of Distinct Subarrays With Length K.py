@@ -1,31 +1,27 @@
 from typing import List
+from collections import Counter
 
 class Solution:
     def maximumSubarraySum(self, nums: List[int], k: int) -> int:
+        """
+        Sliding window and hashing
+        Time: O(n)
+        Space: O(k)
+        """
         n = len(nums)
-        if n < k:
-            return 0
-        seen = {}# key: nums[i], value: i
+        curr = 0
         rst = 0
-        cur_sum = 0
-        for i, n in enumerate(nums):
-            if n in seen: # remove the numbers before i
-                idx = seen[n]
-                seen = {}
-                cur_sum = 0
-                for j in range(idx+1, i + 1):
-                    seen[nums[j]] = j
-                    cur_sum += nums[j]
-
-            else:
-                seen[n] = i
-                cur_sum += n
-                if len(seen) == k:
-                    rst = max(rst, cur_sum)
-                elif len(seen) > k:
-                    cur_sum -= nums[i - k]
-                    rst = max(rst, cur_sum)
-                    del seen[nums[i - k]]
-                #print(i, rst)
-
+        counter = Counter()
+        # j is right bound, i is left bound (both inclusive) of the sliding window 
+        for j in range(n):
+            curr += nums[j]
+            counter[nums[j]] += 1
+            i = j - k + 1
+            if i - 1 >= 0:
+                counter[nums[i - 1]] -= 1
+                curr -= nums[i - 1]
+                if counter[nums[i - 1]] == 0:
+                    del counter[nums[i - 1]]
+            if len(counter) == k:
+                rst = max(rst, curr)
         return rst

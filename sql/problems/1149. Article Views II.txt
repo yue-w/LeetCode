@@ -1,7 +1,17 @@
+
+
+## Method 1
+# SELECT DISTINCT Viewer_id AS id
+# FROM (
+#     SELECT DISTINCT * FROM Views
+# ) tem
+# GROUP BY view_date, viewer_id
+# HAVING COUNT(Viewer_id) > 1
+# ORDER BY id ASC
+
+## Method 2
 SELECT DISTINCT Viewer_id AS id
-FROM (
-    SELECT DISTINCT * FROM Views
-) tem
-GROUP BY view_date, viewer_id
-HAVING COUNT(Viewer_id) > 1
+FROM Views
+GROUP BY viewer_id, view_date
+HAVING COUNT(DISTINCT article_id) > 1
 ORDER BY id ASC

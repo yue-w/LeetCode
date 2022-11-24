@@ -11,7 +11,7 @@ class Solution:
             if counter[str(i)] % 2 == 1:
                 maxv = i
         
-        ## the middle value
+        ## the digit in the middle
         if maxv > -1:
             dq.append(str(maxv))
             counter[maxv] -= 1

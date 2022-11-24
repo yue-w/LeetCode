@@ -9,30 +9,26 @@ class Solution:
         """
         recursion and memoization
         """
+        def dfs(need, idx):
+            ## base case 1
+            if need == 0:
+                return 1
+            ## base case 2
+            if need < 0:
+                return 0
+            ## base case 3
+            if (need, idx) in memo:
+                return memo[(need, idx)]
+            count = 0
+            for i in range(idx, len(coins)):
+                count += dfs(need - coins[i], i)
+            memo[(need, idx)] = count
+            return count
+        coins.sort(reverse=True)
         memo = {}
-        return self.dfs(coins, amount, 0, memo)
-        
-    
-    def dfs(self, coins, remain, index, memo):
-        """
-        index = 0 to len(coins) - 1, whether to use ith coin
-        """
-        ## base cases
-        if remain == 0:
-            return 1
-        if remain < 0:
-            return 0
-        if index >= len(coins):
-            return 0
-        ## if already in memo
-        if (index, remain) in memo:
-            return memo[(index, remain)]
-        
-        use_index = self.dfs(coins, remain - coins[index], index, memo)
-        not_index = self.dfs(coins, remain, index + 1, memo)
-        total = use_index + not_index
-        memo[(index, remain)] = total
-        return total
+        rst = dfs(amount, 0)
+        return rst
+
     def method2(self, amount, coins):
         ## TODO
 #         """

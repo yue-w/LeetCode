@@ -2,36 +2,34 @@ from typing import List
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
         """
-        Thoughts: usge dynamic programming, use back tracking?
+        Thoughts: dfs with memo.
         """
+        def dfs(val):
+            if val == 0:
+                return 0
+            if val < 0:
+                memo[val] = -1
+                return -1
 
+            min_sum = -1
+            for c in coins:
+                if val - c in memo:
+                    tem = memo[val - c]
+                else:
+                    tem = dfs(val - c)
+                    memo[val-c] = tem
+                if tem != -1:
+                    if min_sum == -1 or min_sum > tem:
+                        min_sum = tem + 1
+            
+            return min_sum
+        
+        ## remove duplicates 
+        coins = list(set(coins))
+        
+        coins.sort(reverse=True)
         memo = {}
-        rst = self.recursion(coins, amount, memo)
-        return rst
-
-    
-    def recursion(self, coins, remain, memo):
-        ## Base cases
-        if remain == 0:
-            memo[0] = 0
-            return 0
-        if remain < 0:
-            memo[remain] = -1
-            return -1 
-        min_sum = -1
-        for coin in coins:
-            if remain - coin not in memo:
-                running_sum =  self.recursion(coins, remain-coin, memo)
-                memo[remain-coin] = running_sum
-
-            else:
-                running_sum = memo[remain-coin]
-            if running_sum > -1:
-                running_sum += 1
-                if min_sum == -1 or min_sum > running_sum:
-                    min_sum = running_sum
-
-        return min_sum
+        return dfs(amount)
 
 
 if __name__ == '__main__':

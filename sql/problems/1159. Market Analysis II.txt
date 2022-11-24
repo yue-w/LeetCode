@@ -1,0 +1,23 @@
+
+
+# Write your MySQL query statement below
+
+SELECT user_id AS seller_id, 'no' AS 2nd_item_fav_brand
+FROM Users
+WHERE user_id NOT IN (SELECT seller_id FROM Orders GROUP BY seller_id HAVING COUNT(seller_id) >= 2)
+
+UNION ALL
+
+SELECT seller_id, IF(fbrand=brand, 'yes', 'no')
+FROM (
+    SELECT o.seller_id AS seller_id, RANK() OVER(PARTITION BY o.seller_id ORDER BY o.order_date ASC) AS rk, u.favorite_brand AS fbrand, i.item_brand  as brand
+    FROM Orders o
+    LEFT JOIN Items i
+    ON o.item_id = i.item_id
+    LEFT JOIN Users u
+    ON O.seller_id = u.user_id    
+) tem
+
+WHERE rk=2
+
+
