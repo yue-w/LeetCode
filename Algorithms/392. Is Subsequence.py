@@ -28,19 +28,19 @@ class Solution:
     def method2(self, s, t):
         """
         For follow up.
-        for each character in t, record its occurance
-        for every s, the running time is O(logt)
+        for each character in t, record its index of occurance
+        for every s, the running time is O(|s|*logt)
         """
         from collections import defaultdict
         import bisect
         table = defaultdict(list)
         for i in range(len(t)):
             table[t[i]].append(i)
-        print(table)
+        
         cur_idx = -1
         for c in s:
             idx_c_in_t = table[c]
-            found = False
+
             i = cur_idx
             # use binary search to find the smallest next index in t equals s[i]
             idx = bisect.bisect_right(idx_c_in_t, cur_idx)

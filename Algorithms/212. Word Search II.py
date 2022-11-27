@@ -21,7 +21,6 @@ class Solution:
             
             curr.append(board[row][col])
             
-            ## base case
             if cur_node.isword:
                 rst.add(''.join(curr))
                 cur_node.isword = False
