@@ -1,0 +1,12 @@
+
+WITH cte AS(
+    SELECT person_name, turn,
+    SUM(weight) OVER(ORDER BY turn ASC ROWS UNBOUNDED PRECEDING ) AS cusum
+    FROM Queue
+)
+
+SELECT c1.person_name
+FROM cte c1
+LEFT JOIN cte c2
+ON c1.turn = c2.turn - 1
+WHERE (c1.cusum <= 1000) AND ((c2.cusum > 1000) OR (c2.cusum IS NULL));

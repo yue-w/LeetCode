@@ -110,14 +110,14 @@ class Solution:
         State machine
         """
         #### nxt_idx with dimension (len(s) * 26), nxt_idx[i][j] is at index i, look right, what
-        #### is the index in s of letter x (x from a to z)
+        #### is the index of letter x (x from a to z) in s 
         ## make s 1 indexed, the first index 0 is dummy index so that the first letter in
         ## s can also been seen when looked right
         m = len(s)
         s = '*' + s
         nxt_idx = [[] for _ in range(len(s))]
         nxt_idx[-1] = [-1] * 26
-        #nxt_idx = [[-1 for _ in range(len(s))] for _ in range(26)]
+
         #### construct the table nxt_idx (reversely)
         for i in range(m, 0, -1):
             nxt_idx[i-1] = nxt_idx[i][:]

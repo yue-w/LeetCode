@@ -82,7 +82,11 @@ SELECT DATE(date_time) AS trip_date
 SELECT TIME(date_time) AS trip_time
 DATEDIFF(date1, date2)
 TO_DAYS(date): returns the number of days between a date and year 0 (date "0000-00-00").
-DATE_FORMAT(date, '%Y-%m')
+DATE_FORMAT(date, '%Y-%m') 
+## %Y Year as a numeric, 4-digit value %y Year as a numeric, 2-digit value. 
+## %M	Month name in full (January to December) %m	Month name as a numeric value (00 to 12)
+## %D	Day of the month as a numeric value, followed by suffix (1st, 2nd, 3rd, ...)
+## %d	Day of the month as a numeric value (01 to 31)
 SELECT STR_TO_DATE("August 10 2017", "%M %d %Y");
 
 

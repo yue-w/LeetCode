@@ -1,0 +1,25 @@
+# Write your MySQL query statement below
+
+
+WITH cte1 AS(
+    SELECT first_player AS player_id, first_score AS score
+    FROM Matches
+    UNION ALL
+    SELECT second_player AS player_id, second_score AS score
+    FROM Matches
+),
+cte2 AS(
+    SELECT player_id, SUM(score) AS score
+    FROM cte1
+    GROUP BY player_id
+),
+cte3 AS(
+    SELECT p.group_id, cte2.player_id, RANK() OVER(PARTITION BY p.group_id ORDER BY score DESC, player_id ASC) AS rk
+    FROM cte2
+    LEFT JOIN Players p
+    ON cte2.player_id = p.player_id
+)
+
+SELECT group_id, player_id
+FROM cte3
+WHERE rk = 1;
