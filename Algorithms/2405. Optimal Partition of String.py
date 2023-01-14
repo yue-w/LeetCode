@@ -18,3 +18,4 @@ class Solution:
 
         return rst
         
+print(Solution().partitionString('a'))

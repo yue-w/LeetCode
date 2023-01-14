@@ -15,8 +15,6 @@ class Solution:
                 n &= n - 1
             return count
             
-            
-            return number
         m = len(mat)
         n = len(mat[0])
         upper_bnd = 2 ** n

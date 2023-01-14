@@ -13,17 +13,6 @@ class TreeNode(object):
          self.left = left
          self.right = right
       
-def helper(root, min_v, max_v):
-    ## Base case
-    if not root:
-        return True
-    elif root.val>=max_v or root.val<=min_v:
-        return False
-    else:
-        return helper(root.left, min_v, root.val)\
-            and helper(root.right,root.val,max_v)
-        
-
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         """

@@ -1,0 +1,39 @@
+
+# Write your MySQL query statement below
+
+## Method 1: CTE
+# WITH cte AS
+# (
+#     SELECT DISTINCT sub_id AS  post_id
+#     FROM Submissions
+#     WHERE parent_id IS NULL
+# ),
+# cte2 AS
+# (
+#     SELECT DISTINCT sub_id, parent_id
+#     FROM Submissions
+#     WHERE parent_id IS NOT NULL
+# )
+# SELECT c.post_id, COUNT(parent_id) AS number_of_comments
+# FROM cte c
+# LEFT JOIN cte2 s
+# ON c.post_id = s.parent_id
+# GROUP BY c.post_id
+# ORDER BY c.post_id ASC
+
+
+## Method 2: Subqueries
+SELECT c1.post_id, COUNT(parent_id) AS number_of_comments
+FROM (
+    SELECT DISTINCT sub_id AS  post_id
+    FROM Submissions
+    WHERE parent_id IS NULL
+) c1
+LEFT JOIN (
+    SELECT DISTINCT sub_id, parent_id
+    FROM Submissions
+    WHERE parent_id IS NOT NULL
+) c2
+ON c1.post_id = c2.parent_id
+GROUP BY c1.post_id
+ORDER BY c1.post_id ASC

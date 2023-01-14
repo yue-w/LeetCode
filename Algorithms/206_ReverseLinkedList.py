@@ -21,7 +21,7 @@ class Solution:
             return head
         cur = head
         prev = None
-        nxt = None
+
         while cur:
             nxt = cur.next
             cur.next = prev 

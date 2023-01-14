@@ -16,7 +16,6 @@ class Solution:
             j = i + 1
             curr = nums[i]
             while (j < n) and ((curr & nums[j]) == maxv):
-                curr = (curr & nums[j])
                 j += 1
             maxlen = max(maxlen, j - i)
             i = j

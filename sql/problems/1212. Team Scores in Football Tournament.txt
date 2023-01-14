@@ -1,0 +1,11 @@
+SELECT team_id, team_name, 
+SUM(IF(t.team_id = m.host_team AND m.host_goals > m.guest_goals,3,0)) + 
+SUM(IF(t.team_id = m.guest_team AND m.guest_goals > m.host_goals, 3, 0)) + 
+SUM(IF(t.team_id = m.host_team AND m.guest_goals = m.host_goals, 1, 0)) + 
+SUM(IF(t.team_id = m.guest_team AND m.guest_goals = m.host_goals, 1, 0))
+num_points
+FROM Teams t
+LEFT JOIN Matches m
+ON t.team_id = m.host_team OR t.team_id = m.guest_team
+GROUP BY team_id
+ORDER BY num_points DESC, team_id ASC

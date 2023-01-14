@@ -5,6 +5,7 @@ class Solution:
     def maximumRobots(self, chargeTimes: List[int], runningCosts: List[int], budget: int) -> int:
         """
         Time: O(nlogn)
+        Reference: https://youtu.be/TVh5wAIJ2y8
         """
         n = len(chargeTimes)
         left = 0
@@ -29,7 +30,7 @@ class Solution:
                 dq.pop()
             dq.append(i)
             
-            while dq and dq[0] <= i - k:
+            if dq and dq[0] <= i - k:
                 dq.popleft()
             
             if i - k + 1 >= 0:
