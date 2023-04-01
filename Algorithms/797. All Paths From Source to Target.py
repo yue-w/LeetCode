@@ -18,25 +18,19 @@ class Solution:
         dfs
         dfs is preferred.
         """
+        def dfs(curr, node):
+            ## base case
+            if node == n - 1:
+                rst.append(curr[:])
+            for nxt in graph[node]:
+                curr.append(nxt)
+                dfs(curr, nxt)
+                # backtracking
+                curr.pop()
         n = len(graph)
-        curr = [0]
         rst = []
-        
-        self.dfs(graph, rst, curr, 0)
-        
+        dfs([0], 0)
         return rst
-    
-    def dfs(self, graph, rst, curr, node):
-        ## base cases
-        if node == len(graph) - 1:
-            rst.append(curr[:])
-            return 
-        
-        for n in graph[node]:
-            curr.append(n)
-            self.dfs(graph, rst, curr, n)
-            ## backing track
-            curr.pop()
     
     def method2(self, graph):
         """

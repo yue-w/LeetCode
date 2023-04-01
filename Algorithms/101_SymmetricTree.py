@@ -18,23 +18,27 @@ import queue
 from typing import Optional
 class Solution(object):
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
-        #return self.helper(root.left, root.right)
-        return self.helper_it(root)
+        #return self.method1(root.left, root.right)
+        return self.method2(root)
         
         
-    def helper(self, left, right):
-        if left is None:
-            return right is None
-        elif right is None:
-            return False
-        else:
-            if left.val != right.val:
+    def method1(self, root):
+
+        def dfs(left, right):
+            if left is None:
+                return right is None
+            elif right is None:
                 return False
             else:
-                return self.helper(left.right, right.left) and self.helper(left.left, right.right)
+                if left.val != right.val:
+                    return False
+                else:
+                    return dfs(left.right, right.left) and dfs(left.left, right.right)
+
+        return dfs(root.left, root.right)
             
     ## Iteration method    
-    def helper_it(self, root):
+    def method2(self, root):
         q = queue.Queue()
         q.put(root)
         q.put(root)

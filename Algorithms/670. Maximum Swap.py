@@ -28,7 +28,7 @@ class Solution(object):
             return num
         
         index = 0
-        ## find the last digit that is larger than numlist[i]
+        ## find the last digit that equals to numlist[i]
         for j in range(i+1, len(numlist)):
             if numlist[j] == revnumlist[i]:
                 index = j

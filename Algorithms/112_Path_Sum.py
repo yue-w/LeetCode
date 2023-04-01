@@ -12,34 +12,29 @@ class TreeNode(object):
          self.right = right
          
 class Solution(object):
-    def hasPathSum(self, root, sum):
-        """
-        :type root: TreeNode
-        :type sum: int
-        :rtype: bool
-        """
-        
-    #     ## Mehtod 1: Recursion
-    #     v = 0
-        
-    #     self.rst = False
-    #     if not root: return False
-    #     self.helper(root,sum,v)
-        
-    #     return self.rst
+    def hasPathSum(self, root, targetSum):
+        return self.method1(root, targetSum)
     
-    # def helper(self,root,sum, v):
-    #     if self.rst == True: return 
-    #     if root.left ==None and root.right == None:
-    #         if v+root.val == sum:
-    #             self.rst = True
-    #             return 
+    def method1(self, root, targetSum):
+        if not root:
+            return False
         
-    #     v += root.val
-    #     if root.left:
-    #         self.helper(root.left, sum, v)
-    #     if root.right:
-    #         self.helper(root.right, sum,v)
+        def dfs(node, cur):
+            # base case
+            # if leaf
+            if (not node.left) and (not node.right):
+                return cur == node.val
+            cur -= node.val
+
+            if node.left and dfs(node.left, cur):
+                return True
+            if node.right and dfs(node.right, cur):
+                return True
+            return False
+
+        return dfs(root, targetSum)
+    
+    def method2(self, root, targetSum):
         
         ## Method 2: Iteration.
         if not root:

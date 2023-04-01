@@ -11,23 +11,23 @@ class TreeNode(object):
         self.val = val
         self.left = left
         self.right = right
+
 class Solution(object):
     
     def sortedArrayToBST(self, nums):
-        if not nums:
-            return None
-        n = len(nums)
-        return self.helper(nums, 0, n-1)
-    
-    def helper(self, nums, low, high):
-        if low>high:
-            return None
-        mid = int((low+high)/2)
-        node = TreeNode(nums[mid])
-        node.left = self.helper(nums, low, mid-1)
-        node.right = self.helper(nums, mid+1, high)
-        
-        return node
+        def dfs(le, ri):
+            ## base case
+            if le > ri:
+                return None
+
+            mid = le + (ri - le) // 2
+            root = TreeNode(nums[mid])
+            root.left = dfs(le, mid - 1)
+            root.right = dfs(mid + 1, ri)
+            return root
+
+        root = dfs(0, len(nums) - 1)
+        return root
         
 
     

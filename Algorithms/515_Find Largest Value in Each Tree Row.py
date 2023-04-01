@@ -14,21 +14,55 @@ class TreeNode(object):
 
 class Solution(object):
     
-    ## Method 1 BFS
-    # def largestValues(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: List[int]
-    #     """
-    #     if root == None: return []
-    #     rst = []
-    #     nodes = [root]
-    #     while len(nodes)>0:
-    #         rst.append(max([n.val for n in nodes]))
-    #         nodes = [kid for node in nodes for kid in [node.left, node.right] if kid!=None ]
-                
+
+    def largestValues(self, root):
+        return self.method1(root)
+        #return self.method2(root)
+    
+    def method1(self, root):
+        """
+        BFS
+        """
+        from collections import deque
+        if not root:
+            return []
+        rst = []
+        dq = deque([root])
+        while dq:
+            # Enter from right, exist from left
+            maxv = float('-inf')
+            for _ in range(len(dq)):
+                node = dq.popleft()
+                maxv = max(maxv, node.val)
+                if node.left:
+                    dq.append(node.left)
+                if node.right:
+                    dq.append(node.right)
+            rst.append(maxv)
+        return rst
+    
+    def method2(self, root):
+        """
+        DFS
+        """
+        def dfs(level, rst, node):
+            if not node:
+                return 
             
-        # return rst
+            ## if this is the fist node of this level, just put this node in the list
+            if level == len(rst):
+                rst.append(node.val)
+            else:
+                rst[level] = max(rst[level], node.val)
+            ## next level
+            dfs(level+1, rst, node.left)
+            dfs(level+1, rst, node.right)
+        
+        rst = []
+        dfs(0, rst, root)
+        return rst
+        
+
 
     # ## Method 2: recursion
     # def largestValues(self, root):
@@ -55,31 +89,7 @@ class Solution(object):
     #     self.helper(level+1, rst, node.left)
     #     self.helper(level+1, rst, node.right)
     
-    # Method 1 BFS
-    def largestValues(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
-        if not root:
-            return []
-        rst = []
-        curr_level = [root]
-        
-        while curr_level:
-            rst.append(-float('inf'))
-            next_level = []
-            
-            for node in curr_level:
-                if node:
-                    rst[-1] = max(rst[-1], node.val)
-                    if node.left:
-                        next_level.append(node.left)
-                    if node.right:
-                        next_level.append(node.right)
-            
-            curr_level = next_level
-        return rst
+
     
 node = TreeNode(1)
 node.left = TreeNode(3)

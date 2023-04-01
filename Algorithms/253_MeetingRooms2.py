@@ -11,11 +11,13 @@ class Solution(object):
     
     ## Method one, sort meetings by start time using heap
     def minMeetingRooms(self, intervals):
-        """
-        :type intervals: List[List[int]]
-        :rtype: int
-        """
-        """
+        # return self.method1(intervals)
+        # return self.method2(intervals)
+        # return self.method3(intervals)
+        return self.method4(intervals)
+    
+    def method1(self, intervals):
+        
         ## Put meetings in a heap. Pop based on start time.
         if len(intervals) == 0: return 0
         ## endtimes = [[time[1][0]] for time in intervals]
@@ -36,12 +38,11 @@ class Solution(object):
                 rst.append(next_end)
 
         return len(rst)
-    """
     
-    """
+    
+    def method2(self, intervals):
     ## Method 2, use two list. Sort meetings by start time using built-in function of 
     ## sort 
-    def minMeetingRooms(self, intervals):
         if len(intervals) == 0 or intervals is None: 
             return 0
         intervals.sort()
@@ -59,11 +60,12 @@ class Solution(object):
             if j == len(rst):
                 rst.append(next_end)
         return len(rst)
-        """
+        
+
         
     ## Method 3
     ## Sort start time by list, use a heap for earliest next end time.
-    def minMeetingRooms(self, intervals):
+    def method3(self, intervals):
         if not intervals: 
             return 0
         intervals.sort()
@@ -86,6 +88,26 @@ class Solution(object):
                     max_rooms = len(end_times)
         
         return max_rooms
+
+    def method4(self, intervals):
+        stamp = []
+        for a, b in intervals:
+            """
+            start time is -1 and end time is 1 so that 
+            when there is a tie, start time comes before 
+            end time
+            """
+            stamp.append((a, 1))
+            stamp.append((b, -1))
+        
+        stamp.sort()
+        rst = 0
+        curr = 0
+        for time, v in stamp:
+            curr += v
+            rst = max(rst, curr)
+
+        return rst
         
 intervals = [[6,15],[13,20],[6,17]]
 print(Solution().minMeetingRooms(intervals))
