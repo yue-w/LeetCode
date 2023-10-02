@@ -2,43 +2,7 @@ from typing import List
 
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        #return self.method1(nums)
-        return self.method2(nums) ## preferred method
-    
-    def method1(self, nums):
         """
-        Hashing.
-        Time: O(n)
-        Space: O(n)
-        """
-        nums_set = set(nums)
-        seen = set()
-        rst = 0
-        for num in nums:
-            if num in seen:
-                continue
-            seen.add(num)
-            counter = 1
-            cur_num = num
-            ## go larger
-            while cur_num + 1 in nums_set:
-                seen.add(cur_num + 1)
-                cur_num += 1
-                counter += 1
-            ## go smaller
-            cur_num = num
-            while cur_num - 1 in nums_set:
-                seen.add(cur_num - 1)
-                cur_num -= 1
-                counter += 1
-            
-            rst = max(rst, counter)
-        
-        return rst
-    
-    def method2(self, nums):
-        """
-        Same idea with method1, but a little bit less codes.
         for a number num in nums, if num-1 is not in nums, then num is the 
         lower bound of a continuous sequence, we check its upper bound.
         But if num - 1 is not in nums, then num is not a lower bound, we do

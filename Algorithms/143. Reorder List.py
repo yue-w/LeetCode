@@ -14,8 +14,6 @@ class Solution:
         ## Use two pointers to find the middle of the linked list.
         ## Even length: fist half and second have the same length
         ## Odd length: first half has one more than the second half.
-        dummy = ListNode()
-        dummy.next = head
         slow = head 
         fast = head.next
         while fast and fast.next:
@@ -30,7 +28,7 @@ class Solution:
 
         ## call helper function to reverse the second half of linked list
         h2 = self._reverse_linked_list(h2)
-        h = dummy
+        h = ListNode()
         while h1 or h2:
             if h1:
                 h.next = h1
@@ -52,9 +50,6 @@ class Solution:
             cur = nxt
 
         return prev
-
-
-
 
 
 

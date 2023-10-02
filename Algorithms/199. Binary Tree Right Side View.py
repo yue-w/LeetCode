@@ -23,9 +23,8 @@ class Solution:
             return []
         rst = []
         
-        dq = deque() ## enter from right, leave from left
+        dq = deque([root]) ## enter from right, leave from left
         
-        dq.append(root)
         while dq:
             rst.append(dq[-1].val)
             for _ in range(len(dq)):
@@ -39,7 +38,7 @@ class Solution:
         
     def method2(self, root):
         """
-        DFS (Revers in order traversal)
+        DFS (Revers in-order traversal)
         """
         rst = []
         self.dfs(root, rst, 0)

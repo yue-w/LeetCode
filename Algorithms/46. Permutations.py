@@ -38,7 +38,7 @@ class Solution:
 
     def method2(self, nums):
         """
-        Use a set remove elements 
+        Use a set to remove elements 
         Time: O(n!)
         Space: O(n!)
         """

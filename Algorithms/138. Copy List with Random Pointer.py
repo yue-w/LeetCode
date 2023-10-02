@@ -16,20 +16,20 @@ class Node:
 
 class Solution(object):
     def copyRandomList(self, head):
+        #### Preferred method is method 1
         """
         :type head: Node
         :rtype: Node
         """
-        # ## Method One, iterative, use Hash.
+        # ## Method One, iterative, use Hash. Preferred method.
         # dic = {}
         # current = head
         
         # ## Iterate all nodes, make a deep copy of all the node, 
         # ## set value of val, ignore next and radnom for now
         # while current:
-        #     if not current in dic:
-        #         dic[current] = Node(current.val, None, None)
-        #         current = current.next
+        #     dic[current] = Node(current.val, None, None)
+        #     current = current.next
         
         # ## Iterate all nodes, set value of next and random
         # current = head
@@ -59,7 +59,38 @@ class Solution(object):
     def __init__(self):
         self.dic = {}
         
+"""
+Method 3, 1 pass
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        created = {}
+        dummy = Node(0)
+        dummy.next = head
+        dummy_cp = Node(0)
+        curr = dummy
+        curr_cp = dummy_cp
+        while curr:
+            nxt = curr.next
+            if id(nxt) in created:
+                curr_cp.next = created[id(nxt)]
+            else:
+                if nxt:
+                    nxt_cp = Node(nxt.val)
+                    curr_cp.next = nxt_cp
+                    created[id(nxt)] = nxt_cp
+                
+            random = curr.random
+            if id(random) in created:
+                curr_cp.random = created[id(random)]
+            else:
+                if random:
+                    curr_cp.random = Node(random.val)
+                    created[id(random)] = curr_cp.random
+            curr = curr.next
+            curr_cp = curr_cp.next
 
+        return dummy_cp.next
+"""
 
 
 head = Node(7,None,None)

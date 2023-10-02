@@ -7,37 +7,27 @@ Created on Thu Feb 24 21:26:55 2022
 
 class Solution:
     def findAnagrams(self, s: str, p: str):
+        """
+        Moving (fixed) window
+        """
         rst = []
-        
-        ## template table counting chars
-        template = [0] * 26
-        for char in p:
-            template[ord(char) - ord('a')] += 1
-        
-        ## current table counting chars
-        curr = [0] * 26
-        for i in range(len(s)):
-            curr[ord(s[i]) - ord('a')] += 1
-            
-            if i >= len(p):
-                curr[ord(s[i - len(p)]) - ord('a')] -= 1
-                
-            if self.same(curr, template):
-                rst.append(i - len(p) + 1)
+        pp = [0] * 26
+        ss = [0] * 26
 
+        for char in p:
+            idx = ord(char) - ord('a')
+            pp[idx] += 1
         
+        for i in range(len(s)):
+            idx = ord(s[i]) - ord('a')
+            ss[idx] += 1
+            if i >= len(p):
+                j = i - len(p)
+                ss[ord(s[j]) - ord('a')] -= 1
+            if ss == pp:
+                rst.append(i - len(p) + 1)
+ 
         return rst
-    
-    def same(self, curr, template):
-        """
-        Return True if curr and template are the same
-        """
-        
-        for i in range(len(curr)):
-            if curr[i] != template[i]:
-                return False
-            
-        return True
     
 
     

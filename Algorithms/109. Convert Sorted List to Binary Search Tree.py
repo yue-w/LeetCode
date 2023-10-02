@@ -21,34 +21,23 @@ class Solution:
             truncate the linkedlist in the middle. The left part belongs to the left tree,
             the right part belongs to the right tree. The mid point is the root. 
             """
-            ## base case
+            # Base case
             if not head:
                 return None
-            
-            ## find the mid point of the linkedlist
             dummy = ListNode()
             dummy.next = head
+            slow = head
             fast = head
-            slow = dummy
+            pre = dummy
             while fast and fast.next:
                 fast = fast.next.next
+                pre = slow
                 slow = slow.next
-            
-            mid = slow.next
-            ## cut the fist and second half
-            slow.next = None
-            
-            node = TreeNode(mid.val)
-            
-            node.left = dfs(dummy.next)
-            node.right = dfs(mid.next)
-            
-            return node
-        
-        ## if no node
-        if not head:
-            return
-        ## if only one node
-        if not head.next:
-            return TreeNode(head.val)
+            # Break the linkedlist
+            pre.next = None
+            root = TreeNode(slow.val)
+            root.left = dfs(dummy.next)
+            root.right = dfs(slow.next)
+            return root
+
         return dfs(head)

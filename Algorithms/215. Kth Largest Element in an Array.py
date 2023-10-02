@@ -44,7 +44,8 @@ class Solution:
                 ^   ^     ^          
               left mid   right
 
-        S is element smaller than pivot, L is element larger than pivot. X are element not explored yet.
+        S is an element smaller than pivot, L is an element larger than pivot. 
+        X is an element not explored yet.
 
         left, mid start from 0
         right start from n - 1

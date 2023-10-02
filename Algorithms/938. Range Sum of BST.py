@@ -8,44 +8,46 @@ class TreeNode:
 from typing import Optional
 class Solution:
     def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
-        #return self.iteration(root, low, high)
-        return self.recursion(root, low, high)
-    
-    def recursion(self, root, low, high):
-        self.total = 0
-        self.recursion_helper(root,low, high)
-        return self.total
-    
-    def recursion_helper(self, root, low, high):
-        ## base case:
-        if not root:
-            return
-        if low <= root.val <= high:
-            self.total += root.val
-            self.recursion_helper(root.left, low, high)
-            self.recursion_helper(root.right, low, high)
-        elif root.val < low:
-            self.recursion_helper(root.right, low, high)
-        else:
-            self.recursion_helper(root.left, low, high)
-    
-    def iteration(self, root, low, high):
-        stack = [root]
-        total = 0
-        while stack:
-            node = stack.pop()
-            if low <= node.val <= high:
-                total += node.val
-                if node.left:
-                    stack.append(node.left)
-                if node.right:
-                    stack.append(node.right)
+        return self.method1(root, low, high)
+        #return self.method2(root, low, high)
+    def method1(self, root, low, high):
+        self.rst = 0
+
+        def dfs(node):
+            ## Base case
+            if not node:
+                return
             if node.val < low:
-                if node.right:
-                    stack.append(node.right)
-            if node.val > high:
-                if node.left:
-                    stack.append(node.left)
-            
-        return total
+                dfs(node.right)
+            elif node.val > high:
+                dfs(node.left)
+            else:
+                self.rst += node.val
+                dfs(node.left)
+                dfs(node.right)
+
+        dfs(root)
+        return self.rst
+
+    def method2(self, root, low, high):
+        ## BFS
+        from collections import deque
+        dq = deque([root])
+        rst = 0
+        while dq:
+            for _ in range(len(dq)):
+                node = dq.popleft()
+                if low <= node.val <= high:
+                    rst += node.val
+                    if node.left:
+                        dq.append(node.left)
+                    if node.right:
+                        dq.append(node.right)
+                if node.val < low:
+                    if node.right:
+                        dq.append(node.right)
+                if node.val > high:
+                    if node.left:
+                        dq.append(node.left)
+        return rst
         

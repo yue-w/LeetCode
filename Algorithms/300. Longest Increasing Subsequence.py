@@ -6,6 +6,7 @@ Created on Sun Mar 27 12:54:47 2022
 Leetcode 300
 """
 from bisect import bisect_left
+from typing import List
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
         return self.method1(nums) ## preferred method

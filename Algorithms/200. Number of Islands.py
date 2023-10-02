@@ -1,55 +1,55 @@
+from typing import List
 
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        """
+        Method 1: DFS
+        """
+        def dfs(row, col):
+            """
+            grid[row, col] is 1. Starting form here,
+            flip all the connected island to -1.
+            """
+            if grid[row][col] != '1':
+                return
+            grid[row][col] = '-1'
+            for dr, dc in dirs:
+                if 0 <= row + dr < m and 0 <= col + dc < n:
+                    dfs(row+dr, col+dc)
 
-class Solution(object):
-    def numIslands(self, grid):
-        """
-        :type grid: List[List[str]]
-        :rtype: int
-        """
-        
+        dirs = ((-1, 0), (1, 0), (0, -1), (0, 1))
+        m = len(grid)
+        n = len(grid[0])
         rst = 0
-        if not grid:
-            return rst
-        
-        M = len(grid)
-        N = len(grid[0])
 
-        self.visited = [[False for _ in range(N)] for _ in range(M)]
-        
-        self.dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-        
-        for i in range(M):
-            for j in range(N):
-                if not self.visited[i][j]:
-                    if grid[i][j] == '1':
-                        self.dfs(grid, i, j)
-                        rst += 1
-                        self.visited[i][j] = True
-        
+        for r in range(m):
+            for c in range(n):
+                if grid[r][c] == '1':
+                    rst += 1
+                    dfs(r, c) 
+
         return rst
-                
-        
-    def dfs(self, grid, row, col):
         """
-        find all the 1 that are reachable from grid[row][col], mark them as visited
+        Method 2: Stack
         """
-        ## Base case 0 or out of matrix
-        if not self.valid(grid, row, col) or grid[row][col] == '0'  or self.visited[row][col]:
-            return 
-        
-        ## Mark the node as visited
-        if grid[row][col] == '1':
-            self.visited[row][col] = 1
-        ## search dfs
-        for dir in self.dirs:
-            self.dfs(grid, row + dir[0], col + dir[1])
-        
-        
-    def valid(self, grid, row, col):
-        M = len(grid)
-        N = len(grid[0])
-        return row >= 0 and row < M and col >= 0 and col < N 
+        m = len(grid)
+        n = len(grid[0])
+        stack = []
+        rst = 0
+        found = False
+        for r in range(m):
+            for c in range(n):
+                if grid[r][c] == '1':
+                    rst += 1
+                    stack.append((r, c))
+                    while stack:
+                        row, col = stack.pop()
+                        for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+                            if 0 <= row+dr < m and 0 <= col + dc < n and grid[row+dr][col+dc] == '1':
+                                grid[row+dr][col+dc] = '-1'
+                                stack.append((row+dr, col+dc))
 
+        return rst
 
 
 if __name__ == '__main__':

@@ -6,20 +6,14 @@ class Solution:
         """
         Monotonic stack
         """
-        rst = [0] * len(temperatures)
-        ## Monotonic decrease stack
-        ## first element is index of the number, second is its value
+        n = len(temperatures)
+        answer = [0] * n
         stack = []
-        stack.append((0, temperatures[0]))
-        for i in range(1, len(temperatures)):
-            if temperatures[i] <= stack[-1][1]:
-                ## append, first element is index of the number, second is its value
-                stack.append((i, temperatures[i]))
-            else:
-                while stack and temperatures[i] > stack[-1][1]:
-                    index, val = stack.pop()
-                    rst[index] = i - index
+        ## elements in stack, (tem, index)
+        for i in range(n):
+            while stack and stack[-1][0] < temperatures[i]:
+                tem, idx = stack.pop()
+                answer[idx] = i - idx
+            stack.append((temperatures[i], i))
 
-                stack.append((i, temperatures[i]))
-                    
-        return rst
+        return answer

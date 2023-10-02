@@ -34,7 +34,7 @@ class Solution:
 
 if __name__ == '__main__':
     solution = Solution()
-    coins = [2,5,10,1]
-    amount = 27
+    coins = [1,3,4,5]
+    amount = 7
     rst = solution.coinChange(coins, amount)
     print(rst)

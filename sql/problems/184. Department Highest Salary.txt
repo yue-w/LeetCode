@@ -9,7 +9,6 @@ WHERE (e.departmentId, e.salary) IN (SELECT departmentId, MAX(salary) FROM Emplo
 
 # Method 2
 ## CTE
-
 WITH cte AS(
 SELECT MAX(salary) AS max_salary, departmentId
 FROM Employee

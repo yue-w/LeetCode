@@ -7,7 +7,7 @@ from collections import deque
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         return self.method1(numCourses, prerequisites)
-        #return self.method1(numCourses, prerequisites)
+        #return self.method2(numCourses, prerequisites)
     
     
     def method1(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:

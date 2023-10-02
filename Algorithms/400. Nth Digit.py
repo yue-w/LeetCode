@@ -27,22 +27,5 @@ class Solution(object):
         return int(rst)
 
 
-        # """
-        # :type n: int
-        # :rtype: int
-        # """
-        # i = 1
-        # while n > 9*(10**(i-1))*i:
-        #     n = n - 9*(10**(i-1))*i
-        #     i += 1
-        
-        # start = 10**(i-1)
-        
-        # rst_string = str(start + (n-1)//i)[(n-1)%i]
-        # rst = int(rst_string)
-        
-
-        # return rst
-
 n = 11
 print(Solution().findNthDigit(n))

@@ -20,6 +20,7 @@ class Solution:
                 |                     |
                left                 right (curr)
         """
+        
         def quick_select(array, k, low, high):
             ## Return the kth largest elements in array (recursivly)
             ## Base case. Only one number left, it is the answer

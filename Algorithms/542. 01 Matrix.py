@@ -7,10 +7,7 @@ Created on Mon Nov 16 17:47:07 2020
 from collections import deque
 class Solution:
     def updateMatrix(self, mat):
-
-
-        return self.bfs(mat)
-    
+        return self.bfs(mat)    
     
     def bfs(self, matrix):
         """
@@ -30,9 +27,7 @@ class Solution:
                     rst[i][j] = 0
                     dq.append((i, j))
                     seen[i][j] = True
-
-
-        
+ 
         dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         
         while dq:
@@ -53,11 +48,10 @@ class Solution:
                         if not seen[row_new][col_new]:
                             dq.append((row_new, col_new))
                             seen[row_new][col_new] = True
-                
-                
+                               
         return rst
 
-
+    def dp(self, matrix):
         ## DP
         #visited = [[False for _ in range(len(matrix[0]))] for _ in range(len(matrix))]
         rst = [[float('inf') for _ in range(len(matrix[0]))] for _ in range(len(matrix))]
